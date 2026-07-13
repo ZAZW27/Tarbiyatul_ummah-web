@@ -1,0 +1,19 @@
+{
+    "name": "panti",
+    "version": "1.0.0",
+    "private": true,
+    "workspaces": [
+        "src/frontend",
+        "src/backend/api"
+    ],
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "format": "prettier . --write",
+        "format:check": "prettier . --check"
+    },
+    "author": "Zharif Aziz Zulkarnain Widodo",
+    "license": "ISC",
+    "devDependencies": {
+        "prettier": "^3.9.5"
+    }
+}
