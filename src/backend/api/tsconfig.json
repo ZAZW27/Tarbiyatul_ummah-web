@@ -7,11 +7,6 @@
         "rootDir": "./src",
         "outDir": "./dist",
 
-        "baseUrl": ".",
-        "paths": {
-            "#/*": ["src/*"]
-        },
-
         "strict": true,
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
@@ -24,7 +19,6 @@
 
         "types": ["node"]
     },
-
     "include": ["src/**/*"],
     "exclude": ["node_modules", "dist"]
 }
