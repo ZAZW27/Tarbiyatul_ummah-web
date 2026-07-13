@@ -27,6 +27,8 @@ git checkout -b chore/update-eslint
 
 Each of those sample branches explain the core workload you do at that certain branch
 
+---
+
 ## 3. Initiate dependency installment
 
 Install dependencies **only from the project root**.
@@ -38,6 +40,8 @@ npm install
 This project uses **npm Workspaces**. Running `npm install` from the root installs dependencies for every workspace automatically.
 
 please do not install any dependency in the root directory to avoid conflicts
+
+---
 
 ## 4. Project Structure
 
@@ -59,12 +63,13 @@ Current workspaces:
 
 ## 5. Running the Project
 
+This will run a server for frontend, so there will be no backend:
+
 ```bash
 npm run dev --workspace=src/frontend
 ```
 
-This will run a server for frontend, so there will be no backend, unless you'd like to try for backends, here:
-
+Unless you'd like to try for backends, here:
 
 ```bash
 npm run dev --workspace=src/backend/api
@@ -72,13 +77,15 @@ npm run dev --workspace=src/backend/api
 
 This will enable API usage, so you could test the created API's for your use cases
 
-Servers can be run simultaneusly with different console, feel free to try. 
+Servers can be run simultaneusly with different console, feel free to try.
+
+---
 
 ## 6. Installing Packages
 
 ### Frontend package
 
-you run these from the root directory, no need to go deep into frontend terminal dir. 
+you run these from the root directory, no need to go deep into frontend terminal dir.
 
 ```bash
 npm install <package> --workspace=src/frontend
@@ -95,6 +102,7 @@ Development dependency:
 ```bash
 npm install -D <package> --workspace=src/frontend
 ```
+
 ---
 
 ### Root package (Additional informations, probably not gonna be implemented real soon)
@@ -113,6 +121,8 @@ npm install -D <package>
 ```
 
 Do **not** install backend or frontend libraries in the root package.
+
+---
 
 ## 7. Formatting & Linting
 
@@ -182,6 +192,7 @@ Do not merge directly into `main`.
 ---
 
 # Conventional Commits
+
 The usage of conventional commits are widely used and to help other collaborators understand the core changes of your commits. Please follow these rules to better engage for this project
 
 Format:
@@ -198,19 +209,19 @@ feat(api): add user authentication
 
 ## Types
 
-| Type | Purpose | Example |
-|------|---------|---------|
-| feat | Add a new feature | `feat(frontend): add login page` |
-| fix | Fix a bug | `fix(api): validate JWT token` |
-| chore | Maintenance, tooling, configs, dependencies | `chore(root): configure prettier` |
-| docs | Documentation only | `docs: update README` |
-| style | Formatting only (no logic changes) | `style: format code with prettier` |
-| refactor | Improve code without changing behavior | `refactor(api): simplify auth service` |
-| perf | Performance improvements | `perf(database): optimize queries` |
-| test | Add or modify tests | `test(api): add auth tests` |
-| build | Build system or packaging changes | `build(docker): add PostgreSQL service` |
-| ci | CI/CD workflow changes | `ci: add GitHub Actions workflow` |
-| revert | Revert a previous commit | `revert: remove caching implementation` |
+| Type     | Purpose                                     | Example                                 |
+| -------- | ------------------------------------------- | --------------------------------------- |
+| feat     | Add a new feature                           | `feat(frontend): add login page`        |
+| fix      | Fix a bug                                   | `fix(api): validate JWT token`          |
+| chore    | Maintenance, tooling, configs, dependencies | `chore(root): configure prettier`       |
+| docs     | Documentation only                          | `docs: update README`                   |
+| style    | Formatting only (no logic changes)          | `style: format code with prettier`      |
+| refactor | Improve code without changing behavior      | `refactor(api): simplify auth service`  |
+| perf     | Performance improvements                    | `perf(database): optimize queries`      |
+| test     | Add or modify tests                         | `test(api): add auth tests`             |
+| build    | Build system or packaging changes           | `build(docker): add PostgreSQL service` |
+| ci       | CI/CD workflow changes                      | `ci: add GitHub Actions workflow`       |
+| revert   | Revert a previous commit                    | `revert: remove caching implementation` |
 
 ## Common Scopes
 
