@@ -1,27 +1,31 @@
 {
-  "name": "api",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "tsx watch src/server.ts",
-    "build": "tsc",
-    "start": "node dist/server.js"
-  },
-  "dependencies": {
-    "cors": "^2",
-    "dotenv": "^17",
-    "express": "^5",
-    "helmet": "^8",
-    "morgan": "^1",
-    "pg": "^8"
-  },
-  "devDependencies": {
-    "@types/cors": "^2",
-    "@types/express": "^5",
-    "@types/morgan": "^1",
-    "@types/node": "^24",
-    "tsx": "^4",
-    "typescript": "^5"
-  }
+    "name": "api",
+    "version": "1.0.0",
+    "private": true,
+    "type": "module",
+    "imports": {
+        "#/*": "./src/*"
+    },
+    "scripts": {
+        "dev": "tsx watch src/server.ts",
+        "build": "tsc -p tsconfig.json",
+        "start": "node dist/server.js",
+        "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\""
+    },
+    "dependencies": {
+        "cors": "^2",
+        "dotenv": "^17",
+        "express": "^5",
+        "helmet": "^8",
+        "morgan": "^1",
+        "pg": "^8"
+    },
+    "devDependencies": {
+        "@types/cors": "^2",
+        "@types/express": "^5",
+        "@types/morgan": "^1",
+        "@types/node": "^24",
+        "tsx": "^4",
+        "typescript": "^5"
+    }
 }
