@@ -1,0 +1,240 @@
+openapi: 3.0.3
+info:
+    title: LKSA Tarbiyatul Ummah API
+    description: Backend API contract for Market, Media Gallery, and Admin Authentication.
+    version: 1.0.0
+servers:
+    - url: http://localhost:5000
+      description: Local Development Server
+
+paths:
+    # AUTHENTICATION ----------------------
+    /api/auth/login:
+        post:
+            summary: Admin Login
+            tags:
+                - Auth
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/LoginRequest'
+            responses:
+                '200':
+                    description: Login successful.
+                    headers:
+                        Set-Cookie:
+                            schema:
+                                type: string
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/AuthSuccessResponse'
+
+    /api/auth/logout:
+        post:
+            summary: Admin Logout
+            tags:
+                - Auth
+            security:
+                - cookieAuth: []
+            responses:
+                '200':
+                    description: Logged out successfully.
+
+    #   GET MARKET ----------------------
+    /api/market:
+        get:
+            summary: Fetch Marketplace Items
+            description: Returns items with prices (crafts, products, merchandise) ordered by status (active / inactive).
+            tags:
+                - Public - Market
+            parameters:
+                - in: query
+                  name: category
+                  schema:
+                      type: string
+            responses:
+                '200':
+                    description: List of marketplace items.
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Item'
+
+    # GET MEDIA -----------------------
+    /api/media:
+        get:
+            summary: Fetch Media Gallery Photos
+            description: Returns active items without prices (activity photos, documentation).
+            tags:
+                - Public - Media
+            parameters:
+                - in: query
+                  name: category
+                  schema:
+                      type: string
+            responses:
+                '200':
+                    description: List of gallery media items.
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Item'
+
+    #   ADMIN ------------------------
+    /api/items:
+        post:
+            summary: Create New Item (Upload to Market or Media)
+            description: Uploads image to ImageKit and saves metadata to Postgres. If price is omitted, it becomes a Media item. If price is included, it becomes a Market item. use this for both form (media and market)
+            tags:
+                - Admin - Items
+            security:
+                - cookieAuth: []
+            requestBody:
+                required: true
+                content:
+                    multipart/form-data:
+                        schema:
+                            $ref: '#/components/schemas/ItemCreateRequest'
+            responses:
+                '201':
+                    description: Item created successfully.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Item'
+
+    /api/items/{id}:
+        put:
+            summary: Update Item Details or Status
+            tags:
+                - Admin - Items
+            security:
+                - cookieAuth: []
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      type: integer
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ItemUpdateRequest'
+            responses:
+                '200':
+                    description: Item updated successfully.
+
+        delete:
+            summary: Delete Item
+            description: Removes row from Postgres and deletes image file from ImageKit.
+            tags:
+                - Admin - Items
+            security:
+                - cookieAuth: []
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      type: integer
+            responses:
+                '200':
+                    description: Item and ImageKit asset deleted.
+
+components:
+    securitySchemes:
+        cookieAuth:
+            type: apiKey
+            in: cookie
+            name: admin_session
+
+    schemas:
+        LoginRequest:
+            type: object
+            required:
+                - username
+                - password
+            properties:
+                username:
+                    type: string
+                password:
+                    type: string
+
+        AuthSuccessResponse:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                message:
+                    type: string
+
+        Item:
+            type: object
+            properties:
+                id:
+                    type: integer
+                title:
+                    type: string
+                description:
+                    type: string
+                image_url:
+                    type: string
+                file_id:
+                    type: string
+                price:
+                    type: number
+                    nullable: true
+                status:
+                    type: string
+                    enum: [active, non-active, reserved]
+                category:
+                    type: string
+                    nullable: true
+                created_at:
+                    type: string
+                    format: date-time
+
+        ItemCreateRequest:
+            type: object
+            required:
+                - title
+                - description
+                - image
+            properties:
+                title:
+                    type: string
+                description:
+                    type: string
+                price:
+                    type: number
+                    description: Omit for gallery/media photos, set a number for marketplace items.
+                category:
+                    type: string
+                image:
+                    type: string
+                    format: binary
+
+        ItemUpdateRequest:
+            type: object
+            properties:
+                title:
+                    type: string
+                description:
+                    type: string
+                price:
+                    type: number
+                    nullable: true
+                status:
+                    type: string
+                    enum: [active, non-active, reserved]
+                category:
+                    type: string

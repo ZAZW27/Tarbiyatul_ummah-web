@@ -1,7 +1,7 @@
 // src/backend/api/prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+  // output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -9,15 +9,15 @@ datasource db {
 }
 
 model Admin {
-  id            Int      @id @default(autoincrement())
-  username      String   @unique
+  id            Int       @id @default(autoincrement())
+  username      String    @unique
   password_hash String
-  created_at    DateTime @default(now())
-  updated_at    DateTime @default(now())
+  last_login    DateTime?
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @default(now())
 
   @@map("admins")
 }
-
 model Item {
   id          Int      @id @default(autoincrement())
   title       String
