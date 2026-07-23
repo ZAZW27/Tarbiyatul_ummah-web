@@ -10,18 +10,25 @@
         "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\""
     },
     "dependencies": {
-        "cors": "^2",
-        "dotenv": "^17",
-        "express": "^5",
+        "@prisma/client": "^7.9.0",
+        "cors": "^2.8.6",
+        "dotenv": "^17.4.2",
+        "express": "^5.2.1",
         "helmet": "^8",
+        "imagekit": "^6.0.0",
         "morgan": "^1",
+        "multer": "^2.2.0",
         "pg": "^8"
     },
     "devDependencies": {
-        "@types/cors": "^2",
-        "@types/express": "^5",
+        "@types/cors": "^2.8.19",
+        "@types/express": "^5.0.6",
         "@types/morgan": "^1",
-        "@types/node": "^24",
+        "@types/multer": "^2.2.0",
+        "@types/node": "^24.13.3",
+        "nodemon": "^3.1.14",
+        "prisma": "^7.9.0",
+        "ts-node": "^10.9.2",
         "tsx": "^4",
         "typescript": "^5"
     }
