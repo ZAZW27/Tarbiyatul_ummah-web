@@ -12,9 +12,9 @@ model Admin {
   id            Int       @id @default(autoincrement())
   username      String    @unique
   password_hash String
-  last_login    DateTime?
   created_at    DateTime  @default(now())
   updated_at    DateTime  @default(now())
+  last_login    DateTime?
 
   @@map("admins")
 }

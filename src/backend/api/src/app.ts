@@ -5,6 +5,7 @@ import morgan from 'morgan';
 
 // ROUTER IMPORTS
 import marketRouter from './routes/market.js';
+import mediaRouter from './routes/media.js';
 
 const app = express();
 
@@ -18,5 +19,6 @@ app.get('/', (_, res) => {
 });
 
 app.use('/api/market', marketRouter);
+app.use('/api/media', mediaRouter);
 
 export default app;

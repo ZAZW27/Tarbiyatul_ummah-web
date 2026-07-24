@@ -1,22 +1,22 @@
 import { Router } from 'express';
 import { prisma } from '../db.js';
+import { constrainedMemory } from 'process';
 
 const router = Router();
 
-// GET /api/market
 router.get('/', async (req, res) => {
     try {
+        // Pagination
         const page = Number(req.query.page) || 1;
         const limit = 10;
         const skip = (page - 1) * limit;
 
-        // filter systems
+        // Filter system
         const { category } = req.query;
         const categories = category
             ? String(category)
                   .split(',')
                   .map((c) => c.trim())
-                    .filter(Boolean)
             : [];
 
         const categoryFilter =
@@ -33,13 +33,10 @@ router.get('/', async (req, res) => {
         // Fetching items
         const items = await prisma.item.findMany({
             where: {
-                price: {
-                    not: null,
-                },
+                price: null,
                 ...categoryFilter,
             },
             orderBy: [{ status: 'asc' }, { created_at: 'desc' }],
-
             take: limit,
             skip: skip,
         });
@@ -48,14 +45,14 @@ router.get('/', async (req, res) => {
             succeed: true,
             page: page,
             limit: limit,
-            active_filters: categories,
+            active_filter: categories,
             data: items,
         });
     } catch (error) {
-        console.error('Error fethcing market items:', error);
+        console.error('Error fetching medie items:', error);
         res.status(500).json({
             success: false,
-            error: 'Internal Server Error',
+            error: 'Internal Server Error :(',
         });
     }
 });
