@@ -1,5 +1,5 @@
 {
-    "name": "panti",
+    "name": "Tarbiyatul-ummah",
     "version": "1.0.0",
     "private": true,
     "workspaces": [
@@ -9,7 +9,8 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "format": "prettier . --write",
-        "format:check": "prettier . --check"
+        "format:check": "prettier . --check",
+        "lint": "eslint ."
     },
     "author": "Zharif Aziz Zulkarnain Widodo",
     "license": "ISC",

@@ -10,7 +10,7 @@ router.use(requireAdmin);
 
 const upload = multer({
     storage: multer.memoryStorage(),
-    limits: { fileSize: 5 * 1024 * 1024 }, // Optional: limit file size to 5MB
+    limits: { fileSize: 5 * 1024 * 1024 },
 });
 
 // POST /api/items - Create New Item
@@ -19,33 +19,41 @@ router.post('/', upload.single('image'), async (req: AuthRequest, res: Response)
         const { title, description, price, category } = req.body;
 
         if (!title || !description || !req.file) {
+            let outputMessage = !title
+                ? 'Title'
+                : '' + !description
+                  ? 'description'
+                  : '' + !req.file
+                    ? 'file gambar'
+                    : '' + ' harus terisi!';
+
             return res.status(400).json({
                 success: false,
-                message: 'Title, description, and an image file are required.',
+                message: outputMessage,
             });
         }
 
-        const uploadResponse = await imagekit.upload({
-            file: req.file.buffer,
-            fileName: `lksa_${Date.now()}_${req.file.originalname}`,
-            folder: '/lksa_items',
-        });
+        // const uploadResponse = await imagekit.upload({
+        //     file: req.file.buffer,`
+        //     fileName: `lksa_${Date.now()}_${req.file.originalname}`,
+        //     folder: '/lksa_items',
+        // });
 
-        const parsedPrice = price && !isNaN(Number(price)) ? Number(price) : null;
+        // const parsedPrice = price && !isNaN(Number(price)) ? Number(price) : null;
 
-        const newItem = await prisma.item.create({
-            data: {
-                title: String(title),
-                description: String(description),
-                image_url: uploadResponse.url,
-                file_id: uploadResponse.fileId,
-                price: parsedPrice,
-                status: 'active',
-                category: category ? String(category) : null,
-            },
-        });
+        // const newItem = await prisma.item.create({
+        //     data: {
+        //         title: String(title),
+        //         description: String(description),
+        //         image_url: uploadResponse.url,
+        //         file_id: uploadResponse.fileId,
+        //         price: parsedPrice,
+        //         status: 'active',
+        //         category: category ? String(category) : null,
+        //     },
+        // });
 
-        return res.status(201).json(newItem);
+        // return res.status(201).json(newItem);
     } catch (error) {
         console.error('Error creating item:', error);
         return res.status(500).json({ success: false, message: 'Internal Server Error' });
