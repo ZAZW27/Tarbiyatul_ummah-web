@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser';
 import marketRouter from './routes/market.js';
 import mediaRouter from './routes/media.js';
 import authRouter from './routes/auth.js';
+import itemRouter from './routes/items.js';
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.get('/', (_, res) => {
 // ROUTES
 app.use('/api/market', marketRouter);
 app.use('/api/media', mediaRouter);
+app.use('/api/items', itemRouter);
 app.use('/api/auth', authRouter);
 
 export default app;
