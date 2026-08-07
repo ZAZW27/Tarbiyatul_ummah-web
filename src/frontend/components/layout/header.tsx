@@ -1,7 +1,8 @@
 'use client';
-// import Link from 'next/link';
+import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 import {
     Dialog,
@@ -17,12 +18,12 @@ import {
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
 const navigation = [
-    { name: 'Homepage', href: '#', current: true },
-    { name: 'Tentang Kami', href: '#', current: false },
-    { name: 'Hubungi Kami ', href: '#', current: false },
-    { name: 'Galeri', href: '#', current: false },
-    { name: 'Kerajinan Tangan', href: '#', current: false },
-    { name: 'Donasi', href: '#', current: false },
+    { name: 'Homepage', href: '/' },
+    { name: 'Tentang Kami', href: '/about' },
+    { name: 'Hubungi Kami ', href: '#' },
+    { name: 'Galeri', href: '#' },
+    { name: 'Kerajinan Tangan', href: '#' },
+    { name: 'Donasi', href: '#' },
 ];
 
 function classNames(...classes: (string | undefined | null | false)[]) {
@@ -31,6 +32,7 @@ function classNames(...classes: (string | undefined | null | false)[]) {
 
 export default function Example() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const pathname = usePathname();
     return (
         <>
             <nav className=" sticky top-0 z-50 bg-emerald-600 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/10">
@@ -83,49 +85,51 @@ export default function Example() {
           </div> */}
 
                         <div className="flex flex-1 items-center justify-left sm:items-center sm:justify-start">
-                            <div className="flex items-center space-x-4">
+                            <div className="flex items-center space-x-2 ">
                                 <div className="flex shrink-0 items-center">
                                     <Image
                                         alt="Your Company"
                                         src="/images/logo_lksa.png"
-                                        className="h-12 w-auto"
+                                        className="h-8 w-auto sm:h-12"
                                         width={48}
                                         height={48}
                                     />
                                 </div>
-                                <div className="flex items-center space-x-4">
-                                    <span className="text-xl font-medium text-white tracking-wide">
+                                <div className="flex items-center space-x-2 sm:space-x-4">
+                                    <span className="text-lg font-medium text-white tracking-wide sm:text-xl">
                                         LKSA
                                     </span>
-                                    <div className="h-10 w-0.5 bg-white"></div>
-                                    <div className="flex flex-col justify-items-center">
-                                        <span className="text-sm font-medium leading-tight text-white">
+                                    <div className="h-8 w-0.5 bg-white sm:h-10"></div>
+                                    <div className="flex flex-col justify-center min-w-0">
+                                        <span className="text-xs font-medium leading-tight text-white sm:text-sm truncate">
                                             Tarbiyatul Ummah{' '}
                                         </span>
-                                        <span className="text-sm font-medium leading-tight text-white">
+                                        <span className="text-xs font-medium leading-tight text-white sm-text-sm truncate">
                                             Balikpapan
                                         </span>
                                     </div>
                                 </div>
                             </div>
-
                             <div className="hidden sm:ml-auto sm:block">
                                 <div className="flex space-x-4">
-                                    {navigation.map((item) => (
-                                        <a
-                                            key={item.name}
-                                            href={item.href}
-                                            aria-current={item.current ? 'page' : undefined}
-                                            className={classNames(
-                                                item.current
-                                                    ? 'bg-emerald-900 text-white'
-                                                    : 'text-gray-300 hover:bg-emerald-400 hover:text-white',
-                                                'rounded-md px-3 py-2 text-sm font-medium',
-                                            )}
-                                        >
-                                            {item.name}
-                                        </a>
-                                    ))}
+                                    {navigation.map((item) => {
+                                        const isCurrent = pathname === item.href;
+                                        return (
+                                            <Link
+                                                key={item.name}
+                                                href={item.href}
+                                                aria-current={isCurrent ? 'page' : undefined}
+                                                className={classNames(
+                                                    isCurrent
+                                                        ? 'bg-emerald-900 text-white'
+                                                        : 'text-gray-300 hover:bg-emerald-400 hover:text-white',
+                                                    'rounded-md px-3 py-2 text-sm font-medium',
+                                                )}
+                                            >
+                                                {item.name}
+                                            </Link>
+                                        );
+                                    })}
                                 </div>
                             </div>
                         </div>
@@ -178,21 +182,25 @@ export default function Example() {
                         </div>
 
                         <div className="mt-16 px-2 space-y-1">
-                            {navigation.map((item) => (
-                                <a
-                                    key={item.name}
-                                    href={item.href}
-                                    aria-current={item.current ? 'page' : undefined}
-                                    className={classNames(
-                                        item.current
-                                            ? 'bg-emerald-900 text-white'
-                                            : 'text-gray-300 hover:bg-gray-400 hover:text-white',
-                                        'block rounded-md px-3 py-2 text-base font-medium',
-                                    )}
-                                >
-                                    {item.name}
-                                </a>
-                            ))}
+                            {navigation.map((item) => {
+                                const isCurrent = pathname === item.href;
+                                return (
+                                    <Link
+                                        key={item.name}
+                                        href={item.href}
+                                        aria-current={isCurrent ? 'page' : undefined}
+                                        onClick={() => setMobileMenuOpen(false)}
+                                        className={classNames(
+                                            isCurrent
+                                                ? 'bg-emerald-900 text-white'
+                                                : 'text-gray-300 hover:bg-gray-400 hover:text-white',
+                                            'block rounded-md px-3 py-2 text-base font-medium',
+                                        )}
+                                    >
+                                        {item.name}
+                                    </Link>
+                                );
+                            })}
                         </div>
                     </DialogPanel>
                 </div>
