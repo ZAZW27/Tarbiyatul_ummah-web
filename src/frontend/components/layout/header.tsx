@@ -36,7 +36,7 @@ export default function Example() {
     return (
         <>
             <nav className=" sticky top-0 z-50 bg-emerald-600 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/10">
-                <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 h-20">
+                <div className="mx-auto  px-6 md:px-14  lg:px-16 h-20">
                     <div className="relative flex h-20 items-center justify-between">
                         {/* Mobile menu button*/}
                         {/* <div className="absolute inset-y-0 left-0 flex items-center sm:hidden"> */}
@@ -90,13 +90,13 @@ export default function Example() {
                                     <Image
                                         alt="Your Company"
                                         src="/images/logo_lksa.png"
-                                        className="h-8 w-auto sm:h-12"
-                                        width={48}
-                                        height={48}
+                                        className="h-12 w-auto sm:h-16"
+                                        width={80}
+                                        height={80}
                                     />
                                 </div>
-                                <div className="flex items-center space-x-2 sm:space-x-4">
-                                    <span className="text-lg font-medium text-white tracking-wide sm:text-xl">
+                                <div className="flex items-center space-x-2 sm:space-x-2 md:space-x-2">
+                                    <span className="text-lg font-medium text-white tracking-wide sm:text-xl md:text-xl">
                                         LKSA
                                     </span>
                                     <div className="h-8 w-0.5 bg-white sm:h-10"></div>
@@ -110,7 +110,7 @@ export default function Example() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="hidden sm:ml-auto sm:block">
+                            <div className="hidden  lg:block  lg:ml-auto">
                                 <div className="flex space-x-4">
                                     {navigation.map((item) => {
                                         const isCurrent = pathname === item.href;
@@ -134,7 +134,7 @@ export default function Example() {
                             </div>
                         </div>
 
-                        <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 sm:hidden">
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0 lg:hidden">
                             <button
                                 type="button"
                                 onClick={() => setMobileMenuOpen(true)}
@@ -155,7 +155,7 @@ export default function Example() {
             <Dialog
                 open={mobileMenuOpen}
                 onClose={setMobileMenuOpen}
-                className="relative z-50 sm:hidden"
+                className="relative z-50 lg:hidden"
             >
                 <DialogBackdrop
                     transition

@@ -2,6 +2,16 @@ import './globals.css';
 import Header from '../components/layout/header';
 import Footer from '../components/layout/footer';
 
+// import type { Metadata } from 'next';
+// Impor font dari modul Google Fonts bawaan Next.js
+import { Inclusive_Sans } from 'next/font/google';
+
+const inclusiveSans = Inclusive_Sans({
+    weight: '400', // Inclusive Sans di Google Fonts hanya memiliki weight 400 (Regular)
+    subsets: ['latin'],
+    display: 'swap',
+});
+
 export const metadata = {
     title: 'Tarbiyatul Ummah Web',
     description: 'Deskripsi website Anda',
@@ -10,7 +20,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="id">
-            <body className={'bg-gray-100'}>
+            <body className={`bg-gray-200 ${inclusiveSans.className} font-sans`}>
                 <Header />
 
                 <main>{children}</main>
