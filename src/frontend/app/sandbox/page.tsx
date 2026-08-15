@@ -3,7 +3,14 @@
 
 // import VisiMisiCard from "@/components/ui/card_visi_misi"
 // import ProgramKamiSection from "@/components/ui/programkami_section"
-import { CardSasaranPelayanan } from '@/components/ui/card_sasaran_pelayanan';
+// import { CardSasaranPelayanan } from '@/components/ui/ui_home/card_sasaran_pelayanan';
+// import { CardFasilitasMasjid, CardFasilitasMotor } from '@/components/ui/ui_home/card_fasilitas';
+// import { CardVisiTujuanAbout } from '@/components/ui/ui_about/card_visi_tujuan_about';
+// import {
+//     CardProgramKeagamaan,
+//     CardProgramPendidikan,
+// } from '@/components/ui/ui_about/card_program_about';
+import { CardSasaranLayananAbout } from '@/components/ui/ui_about/card_sasaran_layanan_about';
 
 export default function SandBox() {
     return (
@@ -15,8 +22,12 @@ export default function SandBox() {
             <section>
                 {/* <h2 className="mb-4 text-xl font-semibold">1. Homepage_hero (ukuran mobile)</h2> */}
                 <div className="">
-                    <CardSasaranPelayanan title="Anak-Anak Yatim Piatu" />
+                    <CardSasaranLayananAbout title="Yatim Piatu" />
                 </div>
+
+                {/* <div className="">
+                    <CardFasilitasMotor/>
+                </div> */}
 
                 {/* <div className="pt-20">
                     <ProgramKamiSection/>
