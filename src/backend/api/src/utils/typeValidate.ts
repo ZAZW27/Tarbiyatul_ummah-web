@@ -8,7 +8,11 @@ type validateOptions = {
     maxLength?: number;
 };
 
-export const validate = (value: unknown, fieldName: string, options: validateOptions): string[] => {
+export const validateData = (
+    value: unknown,
+    fieldName: string,
+    options: validateOptions,
+): string[] => {
     const errors: string[] = [];
 
     // Validate: required field
