@@ -56,7 +56,7 @@ export default function HomePageHero() {
                 </div>
             </div>
 
-            <div className="relative z-10 order-2 md:order-1 flex flex-col justify-center items-center md:items-start p-8 md:p-16  bg-gray-200 md:bg-transparent text-center md:text-left">
+            <div className="relative z-10 order-2 md:order-1 flex flex-col justify-center items-center md:items-start p-8 md:p-16  bg-gray-200 md:bg-transparent text-justify md:text-left">
                 <p className="text-black text-md  md:text-lg md:text-white font-medium leading-relaxed mb-4 max-w-md ">
                     Anak - anak adalah penerus bangsa yang perlu dirawat, dididik, dan dijaga dengan
                     baik. Merekalah yang akan menjadi penggerak dan pemimpin bangsa ini di masa

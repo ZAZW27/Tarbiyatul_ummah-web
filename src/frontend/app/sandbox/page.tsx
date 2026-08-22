@@ -10,19 +10,35 @@
 //     CardProgramKeagamaan,
 //     CardProgramPendidikan,
 // } from '@/components/ui/ui_about/card_program_about';
-import { CardSasaranLayananAbout } from '@/components/ui/ui_about/card_sasaran_layanan_about';
+// import { CardSasaranLayananAbout } from '@/components/ui/ui_about/card_sasaran_layanan_about';
+// import { CardHubungiMobile } from '@/components/ui/ui_hubungikami/card_mobile';
+// import Image from 'next/image';
+// import Link from 'next/link';
+// import { ContactRows } from '@/components/ui/ui_hubungikami/contacs_row';
+
+// import { CardHubungiDesktop } from '@/components/ui/ui_hubungikami/card_desktop';
+import CardProduk from '@/components/ui/ui_produk/card_produk';
 
 export default function SandBox() {
     return (
-        <main className="min-h-screen bg-gray-200 px-8 py-20">
+        <main className="min-h-screen bg-gray-200 px-8 py-20 ">
             <h1 className="mb-8 border-b-2 border-gray-200 pb-2 text-xl font-semibold">
                 Component Sandbox
             </h1>
 
             <section>
                 {/* <h2 className="mb-4 text-xl font-semibold">1. Homepage_hero (ukuran mobile)</h2> */}
-                <div className="">
-                    <CardSasaranLayananAbout title="Yatim Piatu" />
+                {/* <div className="">
+                  <ContactRows 
+                  IconImageSrc=""
+                  IconImageAlt=""
+                  title=""
+                  description=""
+                  />
+                </div> */}
+
+                <div>
+                    <CardProduk />
                 </div>
 
                 {/* <div className="">
