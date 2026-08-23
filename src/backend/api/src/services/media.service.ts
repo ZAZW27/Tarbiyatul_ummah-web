@@ -7,27 +7,36 @@ export const getMediaItems = async (page: number, limit: number, categories: str
     const categoryFilter: Prisma.ItemWhereInput =
         categories.length > 0
             ? {
-                  OR: categories.map((cat) => ({
-                      category: {
-                          cat_name: {
-                              contains: cat,
-                              mode: 'insensitive' as const, 
+                  item_categories: {
+                      some: {
+                          category: {
+                              cat_name: {
+                                  in: categories,
+                                  mode: 'insensitive' as const,
+                              },
                           },
                       },
-                  })),
+                  },
               }
             : {};
 
     return await prisma.item.findMany({
         where: {
-            price: null,
+            OR: [
+                { price: null },
+                { stock: 0 }
+            ],
             status: 'active',
             ...categoryFilter,
         },
         include: {
-            category: true,
+            item_categories: {
+                include: {
+                    category: true,
+                },
+            },
         },
-        orderBy: [{ create_at: 'desc' }], // Matches your schema exactly (create_at)
+        orderBy: [{ create_at: 'desc' }],
         take: limit,
         skip: skip,
     });

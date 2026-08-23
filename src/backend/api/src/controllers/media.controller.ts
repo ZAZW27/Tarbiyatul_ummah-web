@@ -7,12 +7,17 @@ export const fetchMedia = async (req: Request, res: Response) => {
         const limit = Number(req.query.limit) || 10;
         const { category } = req.query;
 
-        const categories = category
-            ? String(category)
-                  .split(',')
-                  .map((c) => c.trim())
-                  .filter(Boolean)
-            : [];
+        let categories: string[] = [];
+        if (category) {
+            if (Array.isArray(category)) {
+                categories = category.map((c) => String(c).trim()).filter(Boolean);
+            } else {
+                categories = String(category)
+                    .split(',')
+                    .map((c) => c.trim())
+                    .filter(Boolean);
+            }
+        }
 
         const items = await mediaService.getMediaItems(page, limit, categories);
 
@@ -24,7 +29,7 @@ export const fetchMedia = async (req: Request, res: Response) => {
             data: items,
         });
     } catch (error) {
-        console.error('Error fetching medai items:', error);
+        console.error('Error fetching media items:', error);
         res.status(500).json({
             success: false,
             error: 'Internal Server Error :(',
