@@ -1,14 +1,16 @@
 openapi: 3.0.3
 info:
     title: LKSA Tarbiyatul Ummah API
-    description: Backend API contract for Market, Media Gallery, and Admin Authentication.
+    description: Backend API contract for Marketplace, Media Gallery, Transactions, and Admin Management.
     version: 1.0.0
 servers:
-    - url: http://localhost:5000
+    - url: http://localhost:3000
       description: Local Development Server
 
 paths:
-    # AUTHENTICATION ----------------------
+    # ----------------------------------------------------
+    # AUTHENTICATION
+    # ----------------------------------------------------
     /api/auth/login:
         post:
             summary: Admin Login
@@ -31,6 +33,12 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/AuthSuccessResponse'
+                '401':
+                    description: Invalid credentials.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorResponse'
 
     /api/auth/logout:
         post:
@@ -42,44 +50,107 @@ paths:
             responses:
                 '200':
                     description: Logged out successfully.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessResponse'
 
-    #   GET MARKET ----------------------
+    # ----------------------------------------------------
+    # PUBLIC MARKETPLACE (VIEW & PROCEDURE)
+    # ----------------------------------------------------
     /api/market:
         get:
-            summary: Fetch Marketplace Items
-            description: Returns items with prices (crafts, products, merchandise) ordered by status (active / inactive).
+            summary: Fetch Active Market Catalog
+            description: Returns available items directly from the vw_market_catalog database view.
             tags:
                 - Public - Market
-            parameters:
-                - in: query
-                  name: category
-                  schema:
-                      type: string
             responses:
                 '200':
-                    description: List of marketplace items.
+                    description: List of market items currently in stock.
                     content:
                         application/json:
                             schema:
                                 type: array
                                 items:
-                                    $ref: '#/components/schemas/Item'
+                                    $ref: '#/components/schemas/MarketCatalogItem'
+                '500':
+                    description: Database query failure.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorResponse'
 
-    # GET MEDIA -----------------------
+    /api/market/purchase:
+        post:
+            summary: Purchase Market Item
+            description: Executes the process_purchase stored procedure to deduct stock, record transaction, and update cash balance with atomic rollback protection.
+            tags:
+                - Public - Market
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/PurchaseRequest'
+            responses:
+                '200':
+                    description: Purchase executed successfully.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessResponse'
+                '400':
+                    description: Validation error or insufficient stock.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorResponse'
+
+    # ----------------------------------------------------
+    # PUBLIC MEDIA GALLERY
+    # ----------------------------------------------------
     /api/media:
         get:
-            summary: Fetch Media Gallery Photos
-            description: Returns active items without prices (activity photos, documentation).
+            summary: Fetch Media Gallery
+            description: Returns active documentation and activity photos.
             tags:
                 - Public - Media
             parameters:
                 - in: query
-                  name: category
+                  name: category_id
                   schema:
-                      type: string
+                      type: integer
+                  description: Filter media by specific category ID.
             responses:
                 '200':
-                    description: List of gallery media items.
+                    description: List of media gallery items.
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Item'
+                '500':
+                    description: Server error.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorResponse'
+
+    # ----------------------------------------------------
+    # ADMIN INVENTORY MANAGEMENT (RAW ITEMS TABLE)
+    # ----------------------------------------------------
+    /api/items:
+        get:
+            summary: Fetch All Items (Admin View)
+            description: Returns all items regardless of stock or status (active, sold, hidden).
+            tags:
+                - Admin - Items
+            security:
+                - cookieAuth: []
+            responses:
+                '200':
+                    description: Complete list of all items.
                     content:
                         application/json:
                             schema:
@@ -87,11 +158,9 @@ paths:
                                 items:
                                     $ref: '#/components/schemas/Item'
 
-    #   ADMIN ------------------------
-    /api/items:
         post:
-            summary: Create New Item (Upload to Market or Media)
-            description: Uploads image to ImageKit and saves metadata to Postgres. If price is omitted, it becomes a Media item. If price is included, it becomes a Market item. use this for both form (media and market)
+            summary: Create Item
+            description: Uploads image to storage and inserts item row into PostgreSQL. Triggers audit log if configured.
             tags:
                 - Admin - Items
             security:
@@ -109,10 +178,41 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Item'
+                '400':
+                    description: Invalid payload or constraint violation.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorResponse'
 
     /api/items/{id}:
+        get:
+            summary: Get Single Item
+            tags:
+                - Admin - Items
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      type: integer
+            responses:
+                '200':
+                    description: Item details.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Item'
+                '404':
+                    description: Item not found.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorResponse'
+
         put:
-            summary: Update Item Details or Status
+            summary: Update Item
+            description: Updates item details. Fires the trg_audit_items trigger on Postgres to log OLD state into audit_logs.
             tags:
                 - Admin - Items
             security:
@@ -132,10 +232,20 @@ paths:
             responses:
                 '200':
                     description: Item updated successfully.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessResponse'
+                '400':
+                    description: Validation error.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorResponse'
 
         delete:
             summary: Delete Item
-            description: Removes row from Postgres and deletes image file from ImageKit.
+            description: Deletes row from database and logs action to audit_logs.
             tags:
                 - Admin - Items
             security:
@@ -148,8 +258,21 @@ paths:
                       type: integer
             responses:
                 '200':
-                    description: Item and ImageKit asset deleted.
+                    description: Item deleted successfully.
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SuccessResponse'
+                '400':
+                    description: Foreign key restriction (e.g. item has transaction history).
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ErrorResponse'
 
+# ----------------------------------------------------
+# COMPONENTS & SCHEMAS
+# ----------------------------------------------------
 components:
     securitySchemes:
         cookieAuth:
@@ -177,6 +300,35 @@ components:
                 message:
                     type: string
 
+        MarketCatalogItem:
+            type: object
+            properties:
+                item_id:
+                    type: integer
+                title:
+                    type: string
+                category:
+                    type: string
+                price:
+                    type: number
+                stock:
+                    type: integer
+                image_url:
+                    type: string
+
+        PurchaseRequest:
+            type: object
+            required:
+                - itemId
+                - quantity
+            properties:
+                itemId:
+                    type: integer
+                    minimum: 1
+                quantity:
+                    type: integer
+                    minimum: 1
+
         Item:
             type: object
             properties:
@@ -186,20 +338,23 @@ components:
                     type: string
                 description:
                     type: string
-                image_url:
-                    type: string
-                file_id:
-                    type: string
+                    nullable: true
                 price:
                     type: number
                     nullable: true
+                stock:
+                    type: integer
+                category_id:
+                    type: integer
+                image_url:
+                    type: string
                 status:
                     type: string
-                    enum: [active, non-active, reserved]
-                category:
+                    enum: [active, sold, hidden]
+                create_at:
                     type: string
-                    nullable: true
-                created_at:
+                    format: date-time
+                updated_at:
                     type: string
                     format: date-time
 
@@ -207,7 +362,7 @@ components:
             type: object
             required:
                 - title
-                - description
+                - category_id
                 - image
             properties:
                 title:
@@ -216,9 +371,16 @@ components:
                     type: string
                 price:
                     type: number
-                    description: Omit for gallery/media photos, set a number for marketplace items.
-                category:
+                    description: Set for market items, null for media items.
+                stock:
+                    type: integer
+                    default: 0
+                category_id:
+                    type: integer
+                status:
                     type: string
+                    enum: [active, sold, hidden]
+                    default: active
                 image:
                     type: string
                     format: binary
@@ -232,9 +394,28 @@ components:
                     type: string
                 price:
                     type: number
-                    nullable: true
+                stock:
+                    type: integer
+                category_id:
+                    type: integer
+                image_url:
+                    type: string
                 status:
                     type: string
-                    enum: [active, non-active, reserved]
-                category:
+                    enum: [active, sold, hidden]
+
+        SuccessResponse:
+            type: object
+            properties:
+                message:
                     type: string
+
+        ErrorResponse:
+            type: object
+            properties:
+                error:
+                    oneOf:
+                        - type: string
+                        - type: array
+                          items:
+                              type: string

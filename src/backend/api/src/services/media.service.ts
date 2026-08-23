@@ -1,13 +1,10 @@
+import { Prisma } from '@prisma/client';
 import { prisma } from '../lib/prisma.js';
 
-export const getMarketItems = async (
-    page: number = 1,
-    limit: number = 10,
-    categories: string[] = [],
-) => {
+export const getMediaItems = async (page: number, limit: number, categories: string[]) => {
     const skip = (page - 1) * limit;
 
-    const categoryFilter =
+    const categoryFilter: Prisma.ItemWhereInput =
         categories.length > 0
             ? {
                   item_categories: {
@@ -25,8 +22,10 @@ export const getMarketItems = async (
 
     return await prisma.item.findMany({
         where: {
-            price: { not: null },
-            stock: { gt: 0 },
+            OR: [
+                { price: null },
+                { stock: 0 }
+            ],
             status: 'active',
             ...categoryFilter,
         },
@@ -41,8 +40,4 @@ export const getMarketItems = async (
         take: limit,
         skip: skip,
     });
-};
-
-export const executePurchase = async (itemId: number, quantity: number) => {
-    await prisma.$executeRaw`CALL process_purchase(${itemId}, ${quantity})`;
 };
