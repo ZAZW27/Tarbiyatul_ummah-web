@@ -45,7 +45,11 @@ export const buyItem = async (req: Request, res: Response) => {
 
         await marketService.executePurchase(Number(itemId), Number(quantity));
         res.status(200).json({ message: 'Purchase completed successfully!' });
-    } catch (error: any) {
-        res.status(400).json({ error: error.message || 'Purchase failed' });
+    } catch (error: unknown) {
+        if (error instanceof Error) {
+            res.status(400).json({ error: error.message });
+        } else {
+            res.status(400).json({ error: 'Purchase failed' });
+        }
     }
 };

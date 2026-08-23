@@ -1,6 +1,9 @@
 import express from 'express';
 import cors from 'cors';
+
+// Routes imports
 import marketRoutes from './routes/market.routes.js';
+import mediaRoutes from './routes/media.routes.js';
 
 const app = express();
 
@@ -16,5 +19,6 @@ app.use(
 
 // Mount Routes
 app.use('/api/market', marketRoutes);
+app.use('/api/media', mediaRoutes);
 
 export default app;
