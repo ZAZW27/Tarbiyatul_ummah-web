@@ -1,4 +1,4 @@
-// import CardProduk from '@/components/ui/ui_produk/card_produk';
+import CardProduk from '@/components/ui/ui_produk/card_produk';
 import ModalTambahProduk from '@/components/ui/ui_produk/modal_tambah_produk';
 
 export default function Produk() {

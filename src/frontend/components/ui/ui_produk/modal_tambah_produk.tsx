@@ -1,5 +1,5 @@
 'use client';
-import { Fragment, useState, ChangeEvent} from 'react';
+import { Fragment, useState, ChangeEvent } from 'react';
 import {
     Dialog,
     DialogPanel,
