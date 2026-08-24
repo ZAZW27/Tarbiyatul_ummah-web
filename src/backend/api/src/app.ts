@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import marketRoutes from './routes/market.routes.js';
 import mediaRoutes from './routes/media.routes.js';
 import itemRoutes from './routes/items.routes.js';
+import categoryRoutes from './routes/categories.routes.js';
 
 import { login, logout } from './controllers/auth.controller.js';
 
@@ -29,5 +30,6 @@ app.post('/api/auth/logout', logout);
 app.use('/api/market', marketRoutes);
 app.use('/api/media', mediaRoutes);
 app.use('/api/items', itemRoutes);
+app.use('/api/categories', categoryRoutes);
 
 export default app;
