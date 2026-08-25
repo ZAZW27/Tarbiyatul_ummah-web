@@ -1,13 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import ModalDeleteProduk from './modal_delete_produkt';
+
 // import { Produk } from '@/types/produk';
 
+
 export default function CardProduk() {
+    
+
+
     return (
         <div className="flex flex-col  bg-[#DBEEFF] px-2  outline-2 outline-[#4CC6FF] rounded-xl max-w-90 w-full">
-            {/* <div id="manipulation" className="flex flex-row items-end justify-end">
+            <div id="manipulation" className="flex flex-row items-end justify-end">
                     <div className="flex items-end justify-end">
                   <button id="edit">
                         <Image
@@ -24,19 +30,16 @@ export default function CardProduk() {
                                     <div className="flex items-end justify-end">
                     
 
-                    <button id="delete">
-                        <Image
-                                            src= "/images/icon_delete.png"
-                                            alt= "icon delete"
-                                            width={500}
-                                            height={500}
-                                            className="w-14 h-auto object-contain"
-                                        />
-                    </button>
+                   
+                        <ModalDeleteProduk/>
+                  
+
+
+
                     </div>
 
 
-                </div> */}
+                </div>
 
             <div id="thumbnail" className="flex items-center justify-center mb-4 mt-6">
                 <Image
