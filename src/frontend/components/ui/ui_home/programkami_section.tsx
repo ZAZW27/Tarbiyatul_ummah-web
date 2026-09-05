@@ -5,7 +5,9 @@ export default function ProgramKamiSection() {
     return (
         <section className="flex flex-col  w-full overflow-hidden  md:rounded-2xl shadow-2xl/40 bg-gray-100 ">
             <div className="flex w-full flex-col items-center lg:items-center pt-12">
-                <h1 className="font-semibold text-black text-xl md:text-2xl md:text-center">Program Kami</h1>
+                <h1 className="font-semibold text-black text-xl md:text-2xl md:text-center">
+                    Program Kami
+                </h1>
                 <hr className="mt-2 w-90 border-t-[3px] border-green-600 opacity-100" />
             </div>
 

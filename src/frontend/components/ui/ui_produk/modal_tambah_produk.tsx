@@ -1,5 +1,6 @@
 'use client';
 import { Fragment, useState, ChangeEvent } from 'react';
+import Image from 'next/image';
 import {
     Dialog,
     DialogPanel,
@@ -29,9 +30,9 @@ const formKosong = {
     harga: '',
 };
 
-export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps) {
+export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps) { // Failed linting, but keep it here for now
     const [isOpen, setIsOpen] = useState(false);
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false); // Failed linting, but keep it here for now
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
     const [form, setForm] = useState(formKosong);
@@ -147,7 +148,7 @@ export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps)
                                             className="flex h-24 w-24 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-xl bg-gray-200"
                                         >
                                             {previewUrl ? (
-                                                <img
+                                                <Image
                                                     src={previewUrl}
                                                     alt="Preview"
                                                     className="h-full w-full object-cover"

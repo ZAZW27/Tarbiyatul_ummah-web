@@ -36,7 +36,7 @@ export function ProgramCardPendidikan() {
 
 export function ProgramCardKeagamaan() {
     return (
-         <section className="relative flex flex-col rounded-xl overflow-hidden shadow-2xl w-full min-h-[200px]  md:text-lg  px-4 py-4 md:px-12">
+        <section className="relative flex flex-col rounded-xl overflow-hidden shadow-2xl w-full min-h-[200px]  md:text-lg  px-4 py-4 md:px-12">
             <Image
                 alt="Your Company"
                 src="/images/gambar_orang_nulis.jpg"
@@ -65,6 +65,5 @@ export function ProgramCardKeagamaan() {
                 </div>
             </div>
         </section>
-
     );
 }

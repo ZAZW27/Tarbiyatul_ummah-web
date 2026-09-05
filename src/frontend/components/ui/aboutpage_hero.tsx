@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { TombolHijau } from '@/components/ui/buttons';
-import { Poppins } from 'next/font/google';
+// import { TombolHijau } from '@/components/ui/buttons';
+// import { Poppins } from 'next/font/google';
 
 // const poppinsTitle = Poppins({
 //     weight: ['700'],

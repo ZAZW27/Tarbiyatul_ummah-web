@@ -1,5 +1,5 @@
 export interface Produk {
-    id : number,
+    id: number;
     title: string;
     description: string;
     image_url: string;

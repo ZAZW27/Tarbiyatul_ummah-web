@@ -1,4 +1,3 @@
-import CardProduk from '@/components/ui/ui_produk/card_produk';
 import ModalTambahProduk from '@/components/ui/ui_produk/modal_tambah_produk';
 import { Produk } from '@/types/produk';
 import { getMarketCatalog } from '@/service/market.service';
@@ -6,22 +5,19 @@ import ProdukList from '@/components/ui/ui_produk/produk_list';
 
 export default async function ProdukPage() {
     let dataProduk: Produk[] = [];
-    let errorMsg : string | null = null;
+    let errorMsg: string | null = null;
 
     try {
-       const response = await getMarketCatalog();
-       dataProduk = response.data
-    } catch (err){
-        errorMsg = err instanceof Error ? err.message : "Terjadi Kesalahan tidak terduga"; 
+        const response = await getMarketCatalog();
+        dataProduk = response.data;
+    } catch (err) {
+        errorMsg = err instanceof Error ? err.message : 'Terjadi Kesalahan tidak terduga';
     }
 
     if (errorMsg) {
-        return (
-            <div>
-            </div>
-        )
+        return <div></div>;
     }
-    
+
     return (
         <main className="min-h-full bg-[#EBF4F6] pb-20 ">
             <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 pt-8">
@@ -86,13 +82,11 @@ export default async function ProdukPage() {
                     </div>
                 </section>
                 <section id="tambah_produk_real" className="mb-12 px-2">
-                    <ModalTambahProduk/>
+                    <ModalTambahProduk />
                 </section>
 
                 <section id="Produknya" className=" px-2 flex items-center justify-center ">
-             
-                        <ProdukList produkIn={dataProduk} />
-                
+                    <ProdukList produkIn={dataProduk} />
                 </section>
             </div>
         </main>
