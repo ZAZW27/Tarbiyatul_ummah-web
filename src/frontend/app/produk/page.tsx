@@ -1,9 +1,29 @@
 import CardProduk from '@/components/ui/ui_produk/card_produk';
 import ModalTambahProduk from '@/components/ui/ui_produk/modal_tambah_produk';
+import { Produk } from '@/types/produk';
+import { getMarketCatalog } from '@/service/market.service';
+import ProdukList from '@/components/ui/ui_produk/produk_list';
 
-export default function Produk() {
+export default async function ProdukPage() {
+    let dataProduk: Produk[] = [];
+    let errorMsg : string | null = null;
+
+    try {
+       const response = await getMarketCatalog();
+       dataProduk = response.data
+    } catch (err){
+        errorMsg = err instanceof Error ? err.message : "Terjadi Kesalahan tidak terduga"; 
+    }
+
+    if (errorMsg) {
+        return (
+            <div>
+            </div>
+        )
+    }
+    
     return (
-        <main className="min-h-screen bg-[#EBF4F6] mb-16 ">
+        <main className="min-h-full bg-[#EBF4F6] pb-20 ">
             <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 pt-8">
                 <section
                     id="page_intro"
@@ -65,15 +85,14 @@ export default function Produk() {
                         </div>
                     </div>
                 </section>
+                <section id="tambah_produk_real" className="mb-12 px-2">
+                    <ModalTambahProduk/>
+                </section>
 
-                <section id="tambah_produk" className="mb-12 px-2">
-                    <ModalTambahProduk />
-                    {/* //        
-            //   // Sementara: cukup log dulu. Nanti kalau grid produk sudah
-            //   // dinamis (ambil data dari backend), sambungkan ke situ
-            //   // supaya produk baru langsung muncul tanpa reload.
-            //   console.log("Produk baru ditambahkan:", produkBaru);
-            // }} */}
+                <section id="Produknya" className=" px-2 flex items-center justify-center ">
+             
+                        <ProdukList produkIn={dataProduk} />
+                
                 </section>
             </div>
         </main>

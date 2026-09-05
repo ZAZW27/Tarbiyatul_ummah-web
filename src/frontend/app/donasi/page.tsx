@@ -30,7 +30,7 @@ export default function HubungiKami() {
                 </div>
 
                 <div className="ke_qris">
-                    <p>Pak Lorem Ipsum</p>
+                    <p>(Nama Yang Bersangkutan Akan Ditaruh Disini)</p>
                 </div>
 
                 <div className="flex px-4 lg:pl-46 mt-4 lg:hidden">

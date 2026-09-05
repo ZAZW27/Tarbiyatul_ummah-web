@@ -1,6 +1,7 @@
 export interface Produk {
+    id : number,
     title: string;
-    descripton: string;
+    description: string;
     image_url: string;
     file_id: string;
     price: number;

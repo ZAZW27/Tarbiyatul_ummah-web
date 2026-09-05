@@ -24,6 +24,7 @@ const navigation = [
     { name: 'Galeri', href: '/galeri' },
     { name: 'Kerajinan Tangan', href: '/produk' },
     { name: 'Donasi', href: '/donasi' },
+    { name: 'Login', href: '/auth' },
 ];
 
 function classNames(...classes: (string | undefined | null | false)[]) {

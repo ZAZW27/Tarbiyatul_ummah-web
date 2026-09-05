@@ -1,3 +1,4 @@
+'use client'
 import Image from 'next/image';
 import { TombolHijau } from '@/components/ui/buttons';
 import { Poppins } from 'next/font/google';
