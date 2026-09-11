@@ -2,8 +2,12 @@ import ModalTambahProduk from '@/components/ui/ui_produk/modal_tambah_produk';
 import { Produk } from '@/types/produk';
 import { getMarketCatalog } from '@/service/market.service';
 import ProdukList from '@/components/ui/ui_produk/produk_list';
+import { cookies } from 'next/headers';
 
 export default async function ProdukPage() {
+    const cookieStore = cookies();
+    const isAdmin = (await cookieStore).has('admin_session');
+
     let dataProduk: Produk[] = [];
     let errorMsg: string | null = null;
 
@@ -81,12 +85,14 @@ export default async function ProdukPage() {
                         </div>
                     </div>
                 </section>
-                <section id="tambah_produk_real" className="mb-12 px-2">
-                    <ModalTambahProduk />
-                </section>
+                {isAdmin && (
+                    <section id="tambah_produk_real" className="mb-12 px-2">
+                        <ModalTambahProduk />
+                    </section>
+                )}
 
                 <section id="Produknya" className=" px-2 flex items-center justify-center ">
-                    <ProdukList produkIn={dataProduk} />
+                    <ProdukList produkIn={dataProduk} isAdmin={isAdmin} />
                 </section>
             </div>
         </main>

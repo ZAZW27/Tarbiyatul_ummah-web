@@ -6,9 +6,10 @@ import { Produk } from '@/types/produk';
 
 interface ProdukListProps {
     produkIn: Produk[];
+    isAdmin: boolean;
 }
 
-export default function ProdukList({ produkIn }: ProdukListProps) {
+export default function ProdukList({ produkIn, isAdmin }: ProdukListProps) {
     const router = useRouter(); // Failed linting, but keep it here for now
     const [produkData, setprodukData] = useState(produkIn); // Failed linting, but keep it here for now
 
@@ -22,7 +23,7 @@ export default function ProdukList({ produkIn }: ProdukListProps) {
     return (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {produkData.map((produk) => (
-                <CardProduk key={produk.id} {...produk} />
+                <CardProduk key={produk.id} {...produk} isAdmin={isAdmin} />
             ))}
         </div>
     );

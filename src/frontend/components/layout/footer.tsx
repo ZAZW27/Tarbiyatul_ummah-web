@@ -16,7 +16,7 @@ export default function footer() {
                             height={48}
                             width={48}
                         />
-                        <span className="text-xl font-medium leading-tight">LKSA </span>
+                        <span className="text-xl font-medium leading-tight text-white">LKSA </span>
                         <div className="h-10 w-0.5 bg-white"></div>
                         <div className="flex flex-col">
                             <span className="text-sm font-medium leading-tight text-white">
@@ -63,14 +63,22 @@ export default function footer() {
                     <h2 className="mb-6 text-sm font-semibold   text-white">Hubungi Kami</h2>
                     <ul className="space-y-6 text-sm text-white">
                         <li className="flex items-center space-x-3">
-                            <Image
-                                src="/icons/instagram_icon.png"
-                                alt=""
-                                className="h-auto w-auto"
-                                width={30}
-                                height={30}
-                            />
-                            <a href="https://flowbite.com/" className="hover:underline">
+                            <a
+                                href="
+                            https://www.instagram.com/tarbiyatul.ummah.bpn/"
+                            >
+                                <Image
+                                    src="/icons/instagram_white.png"
+                                    alt=""
+                                    className="h-auto w-auto"
+                                    width={30}
+                                    height={30}
+                                />
+                            </a>
+                            <a
+                                href="https://www.instagram.com/tarbiyatul.ummah.bpn/"
+                                className="hover:underline"
+                            >
                                 tarbiyatul.ummah.bpn
                             </a>
                         </li>

@@ -30,7 +30,8 @@ const formKosong = {
     harga: '',
 };
 
-export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps) { // Failed linting, but keep it here for now
+export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps) {
+    // Failed linting, but keep it here for now
     const [isOpen, setIsOpen] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false); // Failed linting, but keep it here for now
     const [errorMsg, setErrorMsg] = useState<string | null>(null);

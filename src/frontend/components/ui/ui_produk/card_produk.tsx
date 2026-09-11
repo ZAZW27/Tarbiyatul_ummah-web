@@ -2,12 +2,15 @@
 
 import { useState, useEffect } from 'react'; // failed linting (useEffect was declared but never used) -- Biarin aja dulu
 import Image from 'next/image';
-// import ModalDeleteProduk from './modal_delete_produkt';
+import ModalDeleteProduk from './modal_delete_produkt';
 import { Produk } from '@/types/produk';
 import Link from 'next/link';
 import { Inter } from 'next/font/google';
+import ModalTambahProduk from './modal_tambah_produk';
 
-interface CardProdukProps extends Produk {}
+interface CardProdukProps extends Produk {
+    isAdmin: boolean;
+}
 
 // 1. Define your different font here
 export const secondaryFont = Inter({
@@ -23,6 +26,7 @@ export default function CardProduk({
     file_id, // failed linting -- keep it here for now
     price,
     status,
+    isAdmin,
 }: CardProdukProps) {
     // const isImageValid = .image_url && (produk.image_url.startsWith('http') || produk.image_url.startsWith('/'));
     const kontakWhatsapp = 6289602601506; // yusuf
@@ -39,33 +43,25 @@ export default function CardProduk({
 
     return (
         <div className="flex flex-col  bg-[#e6efeb]   outline-2 outline-[#72e5b5] rounded-xl max-w-56 lg:max-w-70 w-full mt-2 overflow-hidden ">
-            {/* <div id="manipulation" className="flex flex-row items-end justify-end">
+            {isAdmin && (
+                <div id="manipulation" className="flex flex-row items-end justify-end">
                     <div className="flex items-end justify-end">
-                  <button id="edit">
-                        <Image
-                                            src= "/images/icon_edit.png"
-                                            alt= "icon delete"
-                                            width={500}
-                                            height={500}
-                                            className="w-14 h-auto object-contain"
-                                        />
-                    </button>
-                    </div>
-                    
-                    
-                                    <div className="flex items-end justify-end">
-                    
-
-                   
-                        <ModalDeleteProduk/>
-                  
-
-
-
+                        <button id="edit">
+                            <Image
+                                src="/images/icon_edit.png"
+                                alt="icon delete"
+                                width={500}
+                                height={500}
+                                className="w-14 h-auto object-contain"
+                            />
+                        </button>
                     </div>
 
-
-                </div> */}
+                    <div className="flex items-end justify-end">
+                        <ModalDeleteProduk />
+                    </div>
+                </div>
+            )}
 
             <div id="thumbnail" className="flex items-center justify-center mb-4 ">
                 <Image

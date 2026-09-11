@@ -19,7 +19,7 @@ export default function Login() {
         setErrorMsg(null);
 
         try {
-            const data = await loginAdmin(username, password); // failed linting (data is declatred but never used) - sengaja 
+            const data = await loginAdmin(username, password); // failed linting (data is declatred but never used) - sengaja
             router.push('/produk');
             router.refresh();
         } catch (err) {
@@ -38,9 +38,9 @@ export default function Login() {
                     <Image
                         alt="Your Company"
                         src="/images/logo_lksa.png"
-                        className="mx-auto h-26 w-auto"        
+                        className="mx-auto h-26 w-auto"
                         height={100}
-                        width={100}             
+                        width={100}
                     />
                     <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">
                         Silahkan Login ke Akun Anda{' '}
