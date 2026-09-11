@@ -22,13 +22,13 @@ export default function Homepage() {
                 className="grid grid-cols-1 gap-8 lg:grid-cols-2 md:px-16"
             >
                 {/* untuk program */}
-                <div className="order-1 lg:order-2 flex h-auto items-center justify-center  border-2 border-dashed border-gray-500 mx-4 md:px-24">
+                <div className="order-1 lg:order-2 flex h-auto items-center justify-center    mx-4 md:px-24">
                     <VisiMisiCard />
                 </div>
 
                 {/* untuk section visi misi   */}
 
-                <div className="order-2 lg:order-1 flex h-auto items-center justify-center border-2 border-dashed border-gray-500 ">
+                <div className="order-2 lg:order-1 flex h-auto items-center justify-center    ">
                     <ProgramKamiSection />
                 </div>
             </section>

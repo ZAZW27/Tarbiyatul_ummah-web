@@ -2,7 +2,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { logoutAdmin } from '@/service/auth.service';
 
 import {
     Dialog,
@@ -20,19 +21,63 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 const navigation = [
     { name: 'Homepage', href: '/' },
     { name: 'Tentang Kami', href: '/about' },
-    { name: 'Hubungi Kami ', href: '#' },
-    { name: 'Galeri', href: '#' },
-    { name: 'Kerajinan Tangan', href: '#' },
-    { name: 'Donasi', href: '#' },
+    { name: 'Hubungi Kami ', href: '/hubungi_kami' },
+    { name: 'Galeri', href: '/galeri' },
+    { name: 'Kerajinan Tangan', href: '/produk' },
+    { name: 'Donasi', href: '/donasi' },
 ];
 
 function classNames(...classes: (string | undefined | null | false)[]) {
     return classes.filter(Boolean).join(' ');
 }
 
-export default function Example() {
+interface headerProps {
+    isAdmin?: boolean;
+}
+
+export default function Header({ isAdmin = false }: headerProps) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const pathname = usePathname();
+    const router = useRouter();
+
+    const handleLogout = async () => {
+        try {
+            await logoutAdmin();
+            router.push('/');
+            router.refresh();
+        } catch (error) {
+            console.error('Gagal melakukan Logout, terjadi kesalahan: ', error);
+        }
+    };
+
+    const AuthButton = ({ isMobile = false }: { isMobile?: boolean }) => {
+        const baseClass = isMobile
+            ? 'block px-4 py-2 text-white hover:bg-emerald-700 w-full text-left font-medium' // Gaya untuk Mobile (dropdown)
+            : 'text-white hover:text-gray-200 font-medium px-3 py-2 rounded-md transition-colors'; // Gaya untuk Desktop (navbar)
+
+        return isAdmin ? (
+            <button
+                onClick={() => {
+                    handleLogout(); // Jalankan fungsi hapus sesi
+                    if (isMobile) setMobileMenuOpen(false); // Tutup sidebar jika di mobile
+                }}
+                className={`${baseClass} text-red-300 hover:text-red-100`}
+            >
+                Logout
+            </button>
+        ) : (
+            <Link
+                href="/auth"
+                onClick={() => {
+                    if (isMobile) setMobileMenuOpen(false);
+                }}
+                className={baseClass}
+            >
+                Login
+            </Link>
+        );
+    };
+
     return (
         <>
             <nav className=" sticky top-0 z-50 bg-emerald-600 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/10">
@@ -84,7 +129,7 @@ export default function Example() {
             </Menu>
           </div> */}
 
-                        <div className="flex flex-1 items-center justify-left sm:items-center sm:justify-start">
+                        <div className="flex flex-1 items-center justify-left sm:items-center sm:justify-start mr-4">
                             <div className="flex items-center space-x-2 ">
                                 <div className="flex shrink-0 items-center">
                                     <Image
@@ -130,6 +175,7 @@ export default function Example() {
                                             </Link>
                                         );
                                     })}
+                                    <AuthButton />
                                 </div>
                             </div>
                         </div>
@@ -201,6 +247,7 @@ export default function Example() {
                                     </Link>
                                 );
                             })}
+                            <AuthButton isMobile={true} />
                         </div>
                     </DialogPanel>
                 </div>
