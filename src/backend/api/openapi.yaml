@@ -4,13 +4,10 @@ info:
     description: Backend API contract for Marketplace, Media Gallery, Transactions, and Admin Management.
     version: 1.0.0
 servers:
-    - url: http://localhost:3000
+    - url: http://localhost:5000
       description: Local Development Server
 
 paths:
-    # ----------------------------------------------------
-    # AUTHENTICATION
-    # ----------------------------------------------------
     /api/auth/login:
         post:
             summary: Admin Login
@@ -55,24 +52,41 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/SuccessResponse'
 
-    # ----------------------------------------------------
-    # PUBLIC MARKETPLACE (VIEW & PROCEDURE)
-    # ----------------------------------------------------
     /api/market:
         get:
             summary: Fetch Active Market Catalog
             description: Returns available items directly from the vw_market_catalog database view.
             tags:
                 - Public - Market
+            parameters:
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                      default: 1
+                  description: 'UNCONFIRMED — verify backend reads this. Page number for pagination.'
+                - in: query
+                  name: limit
+                  schema:
+                      type: integer
+                      default: 10
+                  description: 'UNCONFIRMED — verify backend reads this. Page size.'
+                - in: query
+                  name: categories
+                  schema:
+                      type: array
+                      items:
+                          type: string
+                  style: form
+                  explode: true
+                  description: 'UNCONFIRMED — verify backend reads this and its exact shape (array vs single id).'
             responses:
                 '200':
                     description: List of market items currently in stock.
                     content:
                         application/json:
                             schema:
-                                type: array
-                                items:
-                                    $ref: '#/components/schemas/MarketCatalogItem'
+                                $ref: '#/components/schemas/MarketCatalogListResponse'
                 '500':
                     description: Database query failure.
                     content:
@@ -127,9 +141,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                type: array
-                                items:
-                                    $ref: '#/components/schemas/Item'
+                                $ref: '#/components/schemas/ItemListResponse'
                 '500':
                     description: Server error.
                     content:
@@ -137,9 +149,6 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/ErrorResponse'
 
-    # ----------------------------------------------------
-    # ADMIN INVENTORY MANAGEMENT (RAW ITEMS TABLE)
-    # ----------------------------------------------------
     /api/items:
         get:
             summary: Fetch All Items (Admin View)
@@ -154,9 +163,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                type: array
-                                items:
-                                    $ref: '#/components/schemas/Item'
+                                $ref: '#/components/schemas/ItemListResponse'
 
         post:
             summary: Create Item
@@ -177,7 +184,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/Item'
+                                $ref: '#/components/schemas/ItemResponse'
                 '400':
                     description: Invalid payload or constraint violation.
                     content:
@@ -202,7 +209,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/Item'
+                                $ref: '#/components/schemas/ItemResponse'
                 '404':
                     description: Item not found.
                     content:
@@ -226,7 +233,7 @@ paths:
             requestBody:
                 required: true
                 content:
-                    application/json:
+                    multipart/form-data:
                         schema:
                             $ref: '#/components/schemas/ItemUpdateRequest'
             responses:
@@ -270,9 +277,6 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/ErrorResponse'
 
-# ----------------------------------------------------
-# COMPONENTS & SCHEMAS
-# ----------------------------------------------------
 components:
     securitySchemes:
         cookieAuth:
@@ -344,13 +348,33 @@ components:
                     nullable: true
                 stock:
                     type: integer
-                category_id:
-                    type: integer
                 image_url:
                     type: string
                 status:
                     type: string
                     enum: [active, sold, hidden]
+                file_id:
+                    type: string
+                    nullable: true
+                    description: ImageKit file identifier, used for delete/replace.
+                item_categories:
+                    type: array
+                    items:
+                        type: object
+                        properties:
+                            item_id:
+                                type: integer
+                            category_id:
+                                type: integer
+                            category:
+                                type: object
+                                properties:
+                                    id:
+                                        type: integer
+                                    cat_name:
+                                        type: string
+                                    cat_type:
+                                        type: string
                 create_at:
                     type: string
                     format: date-time
@@ -362,7 +386,6 @@ components:
             type: object
             required:
                 - title
-                - category_id
                 - image
             properties:
                 title:
@@ -375,8 +398,9 @@ components:
                 stock:
                     type: integer
                     default: 0
-                category_id:
-                    type: integer
+                category_ids:
+                    type: string
+                    description: "JSON-encoded array of category IDs, e.g. '[1,2]'. May be omitted/empty to create an item with zero categories."
                 status:
                     type: string
                     enum: [active, sold, hidden]
@@ -394,28 +418,73 @@ components:
                     type: string
                 price:
                     type: number
+                    nullable: true
                 stock:
                     type: integer
-                category_id:
-                    type: integer
-                image_url:
+                category_ids:
                     type: string
+                    description: "JSON-encoded array of category IDs, e.g. '[1,2]'"
                 status:
                     type: string
                     enum: [active, sold, hidden]
+                image:
+                    type: string
+                    format: binary
+
+        # ---- Response envelopes ----
+        # Every backend response is wrapped in { success, data } or
+        # { success, message } — these schemas model that honestly instead of
+        # returning bare arrays/objects.
 
         SuccessResponse:
             type: object
             properties:
+                success:
+                    type: boolean
+                    example: true
                 message:
                     type: string
 
         ErrorResponse:
             type: object
             properties:
-                error:
+                success:
+                    type: boolean
+                    example: false
+                message:
                     oneOf:
                         - type: string
                         - type: array
                           items:
                               type: string
+
+        ItemResponse:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                    example: true
+                data:
+                    $ref: '#/components/schemas/Item'
+
+        ItemListResponse:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                    example: true
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Item'
+
+        MarketCatalogListResponse:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                    example: true
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/MarketCatalogItem'

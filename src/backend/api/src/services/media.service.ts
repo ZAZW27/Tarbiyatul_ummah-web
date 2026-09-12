@@ -22,10 +22,7 @@ export const getMediaItems = async (page: number, limit: number, categories: str
 
     return await prisma.item.findMany({
         where: {
-            OR: [
-                { price: null },
-                { stock: 0 }
-            ],
+            price: null,
             status: 'active',
             ...categoryFilter,
         },
