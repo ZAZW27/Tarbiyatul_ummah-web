@@ -27,7 +27,7 @@ export const getMarketItems = async (
         where: {
             price: { not: null },
             stock: { gt: 0 },
-            status: 'active',
+            status: {not:'hidden'},
             ...categoryFilter,
         },
         include: {

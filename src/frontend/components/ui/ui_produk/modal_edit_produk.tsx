@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { Fragment, useState, ChangeEvent } from 'react';
 import Image from 'next/image';
 import { updateAdminItem } from '@/service/admin.service';
@@ -12,11 +12,9 @@ import {
     ListboxButton,
     ListboxOptions,
     ListboxOption,
-} from "@headlessui/react";
+} from '@headlessui/react';
 
-
-
-const statusOption: Array<"active" | "inactive"> = ["active", "inactive"];
+const statusOption: Array<'active' | 'sold'> = ['active', 'sold'];
 
 interface ModalEditProdukProps {
     id: number;
@@ -24,7 +22,7 @@ interface ModalEditProdukProps {
     deskripsi: string;
     harga: number;
     stock: number;
-    status: "active" | "inactive";
+    status: 'active' | 'sold';
     gambar: string; // URL gambar yang sudah ada (dari field image_url di database)
     onSuccess?: () => void;
 }
@@ -71,11 +69,11 @@ export default function ModalEditProduk({
         setForm((prev) => ({ ...prev, [name]: value }));
     };
 
-   const handleSubmit = async (e: React.SubmitEvent & { nativeEvent: SubmitEvent }) => {
+    const handleSubmit = async (e: React.SubmitEvent & { nativeEvent: SubmitEvent }) => {
         e.preventDefault();
 
-       if (!form.nama || !form.harga || form.stock === undefined || !form.deskripsi) {
-            setErrorMsg("Nama, Harga, Stock, dan deskripsi wajib diisi ya");
+        if (!form.nama || !form.harga || form.stock === undefined || !form.deskripsi) {
+            setErrorMsg('Nama, Harga, Stock, dan deskripsi wajib diisi ya');
             return;
         }
 
@@ -83,24 +81,25 @@ export default function ModalEditProduk({
         setErrorMsg(null);
         try {
             const formData = new FormData();
-            formData.append("title", form.nama);
-            formData.append("description", form.deskripsi);
-            formData.append("price", form.harga);
-            formData.append("stock", form.stock);
-            formData.append("status", status);
+            formData.append('title', form.nama);
+            formData.append('description', form.deskripsi);
+            formData.append('price', form.harga);
+            formData.append('stock', form.stock);
+            formData.append('status', status);
 
             // Gambar cuma dikirim kalau admin pilih file baru.
             if (imageFile) {
-                formData.append("image", imageFile);
+                formData.append('image', imageFile);
             }
 
-    
             await updateAdminItem(id, formData);
 
             handleClose();
             onSuccess?.();
         } catch (err) {
-            setErrorMsg(err instanceof Error ? err.message : "Terjadi kesalahan saat mengubah produk");
+            setErrorMsg(
+                err instanceof Error ? err.message : 'Terjadi kesalahan saat mengubah produk',
+            );
         } finally {
             setIsSubmitting(false);
         }
@@ -108,13 +107,13 @@ export default function ModalEditProduk({
 
     return (
         <>
-            <button id="edit" onClick={() => setIsOpen(true)}>
+            <button id="edit" onClick={() => setIsOpen(true)} className="cursor-pointer">
                 <Image
                     src="/images/icon_edit.png"
                     alt="icon edit"
-                    width={500}
-                    height={500}
-                    className="w-14 h-auto object-contain"
+                    width={50}
+                    height={50}
+                    className="w-10 h-auto object-contain"
                 />
             </button>
 
@@ -147,7 +146,10 @@ export default function ModalEditProduk({
                                     <DialogTitle className="text-lg font-semibold text-gray-800">
                                         Edit Produk
                                     </DialogTitle>
-                                    <button onClick={handleClose} className="text-gray-400 hover:text-gray-600">
+                                    <button
+                                        onClick={handleClose}
+                                        className="text-gray-400 hover:text-gray-600"
+                                    >
                                         ✕
                                     </button>
                                 </div>
@@ -165,9 +167,15 @@ export default function ModalEditProduk({
                                             className="flex h-42 w-42 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-xl bg-gray-200"
                                         >
                                             {previewUrl ? (
-                                                <img src={previewUrl} alt="Preview" className="h-full w-full object-cover" />
+                                                <img
+                                                    src={previewUrl}
+                                                    alt="Preview"
+                                                    className="h-full w-full object-cover"
+                                                />
                                             ) : (
-                                                <span className="text-xs text-gray-400">Tidak ada gambar</span>
+                                                <span className="text-xs text-gray-400">
+                                                    Tidak ada gambar
+                                                </span>
                                             )}
                                         </label>
                                         <input
@@ -188,7 +196,9 @@ export default function ModalEditProduk({
                                     <Listbox value={status} onChange={setStatus}>
                                         <div className="relative">
                                             <ListboxButton className="flex w-full items-center justify-between rounded-full bg-gray-800 px-4 py-2 text-sm font-medium text-white">
-                                                <span className="truncate capitalize">{status}</span>
+                                                <span className="truncate capitalize">
+                                                    {status}
+                                                </span>
                                                 <span>▾</span>
                                             </ListboxButton>
                                             <ListboxOptions className="absolute z-10 mt-1 w-full rounded-lg bg-white py-1 text-sm shadow-lg ring-1 ring-black/5 focus:outline-none">
@@ -206,7 +216,9 @@ export default function ModalEditProduk({
                                     </Listbox>
 
                                     <div>
-                                        <label className="mb-1 block text-sm font-medium text-gray-700">Nama Produk</label>
+                                        <label className="mb-1 block text-sm font-medium text-gray-700">
+                                            Nama Produk
+                                        </label>
                                         <input
                                             type="text"
                                             name="nama"
@@ -217,7 +229,9 @@ export default function ModalEditProduk({
                                     </div>
 
                                     <div>
-                                        <label className="mb-1 block text-sm font-medium text-gray-700">Deskripsi produk</label>
+                                        <label className="mb-1 block text-sm font-medium text-gray-700">
+                                            Deskripsi produk
+                                        </label>
                                         <textarea
                                             name="deskripsi"
                                             value={form.deskripsi}
@@ -228,7 +242,9 @@ export default function ModalEditProduk({
                                     </div>
 
                                     <div>
-                                        <label className="mb-1 block text-sm font-medium text-gray-700">Harga produk</label>
+                                        <label className="mb-1 block text-sm font-medium text-gray-700">
+                                            Harga produk
+                                        </label>
                                         <input
                                             type="number"
                                             name="harga"
@@ -240,7 +256,9 @@ export default function ModalEditProduk({
                                     </div>
 
                                     <div>
-                                        <label className="mb-1 block text-sm font-medium text-gray-700">Stock</label>
+                                        <label className="mb-1 block text-sm font-medium text-gray-700">
+                                            Stock
+                                        </label>
                                         <input
                                             type="number"
                                             name="stock"
@@ -265,7 +283,7 @@ export default function ModalEditProduk({
                                             disabled={isSubmitting}
                                             className="flex-1 rounded-full bg-green-500 py-3 font-semibold text-white transition hover:bg-green-600 disabled:opacity-60"
                                         >
-                                            {isSubmitting ? "Menyimpan..." : "Simpan Perubahan"}
+                                            {isSubmitting ? 'Menyimpan...' : 'Simpan Perubahan'}
                                         </button>
                                     </div>
                                 </form>

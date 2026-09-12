@@ -3,21 +3,53 @@ import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/re
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import Image from 'next/image';
+import { deleteAdminItem } from '@/service/admin.service';
 
-export default function ModalDeleteProduk() {
+interface modalDeleteProdukProps {
+    id: number;
+    nama: string;
+    onSuccess?: () => void;
+}
+
+export default function ModalDeleteProduk({ id, nama, onSuccess }: modalDeleteProdukProps) {
     const [openDelete, setOpenDelete] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+    const handleDelete = async () => {
+        setIsSubmitting(true);
+        setErrorMsg(null);
+        try {
+            await deleteAdminItem(id); // Memanggil API hapus dengan ID
+            setOpenDelete(false);
+            if (onSuccess) onSuccess(); // Memicu pembaruan data di parent komponen
+        } catch (err) {
+            setErrorMsg(
+                err instanceof Error ? err.message : 'Terjadi kesalahan saat menghapus produk',
+            );
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    const handleClose = () => {
+        if (isSubmitting) return; // Cegah penutupan saat sedang loading
+        setOpenDelete(false);
+        setErrorMsg(null);
+    };
+
     return (
         <>
-            <button id="delete" onClick={() => setOpenDelete(true)}>
+            <button id="delete" onClick={() => setOpenDelete(true)} className="cursor-pointer">
                 <Image
                     src="/images/icon_delete.png"
                     alt="icon delete"
-                    width={500}
-                    height={500}
-                    className="w-14 h-auto object-contain"
+                    width={50}
+                    height={50}
+                    className="w-10 h-auto object-contain"
                 />
             </button>
-            <Dialog open={openDelete} onClose={setOpenDelete} className="relative z-10">
+            <Dialog open={openDelete} onClose={handleClose} className="relative z-10">
                 <DialogBackdrop
                     transition
                     className="fixed inset-0 bg-gray-900/50 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"
@@ -47,26 +79,37 @@ export default function ModalDeleteProduk() {
                                         <div className="mt-2">
                                             <p className="text-sm text-gray-400">
                                                 Apakah anda yakin ingin menghapus produk
-                                                nama_produk? tindakan ini tidak akan bisa di
-                                                balikkan. Pastikan anda benar-benar yakin untuk
-                                                menghapus produk ini.
+                                                <span className="font-bold text-white">
+                                                    {' '}
+                                                    {nama}
+                                                </span>
+                                                ? tindakan ini tidak akan bisa di balikkan. Pastikan
+                                                anda benar-benar yakin untuk menghapus produk ini.
                                             </p>
                                         </div>
+                                        {/* if error */}
+                                        {errorMsg && (
+                                            <div className="mt-3 rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-400">
+                                                {errorMsg}
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
                             <div className="bg-gray-700/25 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                                 <button
                                     type="button"
-                                    onClick={() => setOpenDelete(false)}
+                                    onClick={handleDelete}
+                                    disabled={isSubmitting}
                                     className="inline-flex w-full justify-center rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white hover:bg-red-400 sm:ml-3 sm:w-auto"
                                 >
-                                    HAPUS PRODUK
+                                    {isSubmitting ? 'MENGHAPUS...' : 'HAPUS PRODUK'}
                                 </button>
                                 <button
                                     type="button"
                                     data-autofocus
-                                    onClick={() => setOpenDelete(false)}
+                                    onClick={handleClose}
+                                    disabled={isSubmitting}
                                     className="mt-3 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20 sm:mt-0 sm:w-auto"
                                 >
                                     Batalkan

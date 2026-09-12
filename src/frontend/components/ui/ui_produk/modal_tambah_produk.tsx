@@ -18,7 +18,7 @@ import {
 // import { tambahProduk } from "@/services/produk";
 // import { Produk } from "@/types/produk";
 
-const statusOption: Array<'active' | 'inactive'> = ['active', 'inactive'];
+const statusOption: Array<'active' | 'sold'> = ['active', 'sold'];
 
 // const KategoriOption = ['Kerajinan Tangan', 'Aksesoris', 'Lainnya'];
 
@@ -30,7 +30,7 @@ const formKosong = {
     nama: '',
     deskripsi: '',
     harga: '',
-    stock:''
+    stock: '',
 };
 
 export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps) {
@@ -65,17 +65,17 @@ export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps)
         setPreviewUrl(URL.createObjectURL(file));
     };
 
-    const handleInputChange = (e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const {name, value} = e.target;
-        setForm((prev)=>({ ...prev, [name]:value}));
-    }
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setForm((prev) => ({ ...prev, [name]: value }));
+    };
 
     const handleSubmit = async (e: React.SubmitEvent & { nativeEvent: SubmitEvent }) => {
         e.preventDefault();
 
         if (!form.nama || !form.harga || !form.stock || !imageFile || !form.deskripsi) {
-            setErrorMsg("Nama, Harga, Stock, Gambar, dan deskripsi wajib di isi ya");
-            return
+            setErrorMsg('Nama, Harga, Stock, Gambar, dan deskripsi wajib di isi ya');
+            return;
         }
         setIsSubmitting(true);
         setErrorMsg(null);
@@ -87,13 +87,17 @@ export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps)
             formData.append('stock', form.stock);
             formData.append('status', status);
             formData.append('image', imageFile);
-            
+
             await createAdminItem(formData);
 
             handleClose();
             if (onSuccess) onSuccess();
-        } catch (err){
-            setErrorMsg(err instanceof Error ? err.message: 'Terjadi Kesalahan saat ingin menambahkan produk');
+        } catch (err) {
+            setErrorMsg(
+                err instanceof Error
+                    ? err.message
+                    : 'Terjadi Kesalahan saat ingin menambahkan produk',
+            );
         } finally {
             setIsSubmitting(false);
         }
@@ -147,10 +151,10 @@ export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps)
                                     </button>
                                 </div>
                                 {errorMsg && (
-                                        <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-3 rounded mb-4 text-sm">
-                                            {errorMsg}
-                                        </div>
-                                    )}
+                                    <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-3 rounded mb-4 text-sm">
+                                        {errorMsg}
+                                    </div>
+                                )}
 
                                 <form onSubmit={handleSubmit} className="space-y-4">
                                     {/* Foto produk */}
@@ -164,7 +168,7 @@ export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps)
                                                     src={previewUrl}
                                                     alt="Preview"
                                                     width={100}
-                                                                            height={100}
+                                                    height={100}
                                                     className="h-full w-full object-cover"
                                                 />
                                             ) : (
@@ -190,47 +194,47 @@ export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps)
                                     <div className="grid grid-cols-2 gap-3">
                                         <Listbox value={status} onChange={setStatus}>
                                             {({ open }) => (
-                                            <div className="relative">
-                                                <ListboxButton className="flex w-full items-center justify-between rounded-full bg-gray-800 px-4 py-2 text-sm font-medium text-white">
-                                                    <span className="truncate">
-                                                        {status ?? 'Pilih Status'}
-                                                    </span>
-                                                    <h1>
-                                                         <Image
-                                                                           src={open ? "/icons/up_triangle.png" : "/icons/down_triangle.png"}
-                                                                            alt="well well well this isn't supposes to happened"
-                                                                            width={20}
-                                                                            height={20}
-                                                                            className="w-4 h-auto object-contain "
-                                                                        />
-
-                                                        
-                                                    </h1>
-                                                </ListboxButton>
-                                                   <Transition
-                    show={open}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                >
-
-
-                    <ListboxOptions className="absolute z-10 mt-1 w-full rounded-lg bg-slate-300 py-1 text-sm shadow-lg ring-1 ring-black/5 focus:outline-none">
-                        {statusOption.map((opt) => (
-                            <ListboxOption
-                                key={opt}
-                                value={opt}
-                                className="cursor-pointer px-4 py-2 data-focus:bg-sky-50"
-                            >
-                                {opt}
-                            </ListboxOption>
-                        ))}
-                    </ListboxOptions>
-                </Transition>
-                                                {/* <ListboxOptions className="absolute z-10 mt-1 w-full rounded-lg  bg-slate-300 py-1 text-sm shadow-lg ring-1 ring-black/5 focus:outline-none">
+                                                <div className="relative">
+                                                    <ListboxButton className="flex w-full items-center justify-between rounded-full bg-gray-800 px-4 py-2 text-sm font-medium text-white">
+                                                        <span className="truncate">
+                                                            {status ?? 'Pilih Status'}
+                                                        </span>
+                                                        <h1>
+                                                            <Image
+                                                                src={
+                                                                    open
+                                                                        ? '/icons/up_triangle.png'
+                                                                        : '/icons/down_triangle.png'
+                                                                }
+                                                                alt="well well well this isn't supposes to happened"
+                                                                width={20}
+                                                                height={20}
+                                                                className="w-4 h-auto object-contain "
+                                                            />
+                                                        </h1>
+                                                    </ListboxButton>
+                                                    <Transition
+                                                        show={open}
+                                                        enter="transition ease-out duration-100"
+                                                        enterFrom="transform opacity-0 scale-95"
+                                                        enterTo="transform opacity-100 scale-100"
+                                                        leave="transition ease-in duration-75"
+                                                        leaveFrom="transform opacity-100 scale-100"
+                                                        leaveTo="transform opacity-0 scale-95"
+                                                    >
+                                                        <ListboxOptions className="absolute z-10 mt-1 w-full rounded-lg bg-slate-300 py-1 text-sm shadow-lg ring-1 ring-black/5 focus:outline-none">
+                                                            {statusOption.map((opt) => (
+                                                                <ListboxOption
+                                                                    key={opt}
+                                                                    value={opt}
+                                                                    className="cursor-pointer px-4 py-2 data-focus:bg-sky-50"
+                                                                >
+                                                                    {opt}
+                                                                </ListboxOption>
+                                                            ))}
+                                                        </ListboxOptions>
+                                                    </Transition>
+                                                    {/* <ListboxOptions className="absolute z-10 mt-1 w-full rounded-lg  bg-slate-300 py-1 text-sm shadow-lg ring-1 ring-black/5 focus:outline-none">
                                                     {statusOption.map((opt) => (
                                                         <ListboxOption
                                                             key={opt}
@@ -243,7 +247,7 @@ export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps)
                                                         </ListboxOption>
                                                     ))}
                                                 </ListboxOptions> */}
-                                            </div>
+                                                </div>
                                             )}
                                         </Listbox>
 
@@ -292,7 +296,7 @@ export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps)
                                             Deskripsi produk
                                         </label>
                                         <textarea
-                                        name = "deskripsi"
+                                            name="deskripsi"
                                             value={form.deskripsi}
                                             onChange={handleInputChange}
                                             rows={3}
@@ -307,8 +311,8 @@ export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps)
                                         </label>
                                         <input
                                             type="number"
-                                            name = "harga"
-                                            min= "0"
+                                            name="harga"
+                                            min="0"
                                             value={form.harga}
                                             onChange={handleInputChange}
                                             className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-sky-500 focus:outline-none"
@@ -322,8 +326,8 @@ export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps)
                                         </label>
                                         <input
                                             type="number"
-                                            name = "stock"
-                                             min= "0"
+                                            name="stock"
+                                            min="0"
                                             value={form.stock}
                                             onChange={handleInputChange}
                                             className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-sky-500 focus:outline-none"
