@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import { AuthRequest } from '../middleware/auth.middleware.js'; 
+import { AuthRequest } from '../middleware/auth.middleware.js';
 import * as itemsService from '../services/items.service.js';
 import { imagekit } from '../lib/imagekit.js';
 
@@ -88,12 +88,24 @@ export const updateItem = async (req: AuthRequest, res: Response) => {
         if (status !== undefined) updateData.status = String(status);
 
         if (req.file) {
+            const existing = await itemsService.getAdminItemById(id);
+
+            if (existing?.file_id) {
+                try {
+                    await imagekit.deleteFile(existing.file_id);
+                } catch (err) {
+                    console.error('Failed to delete old ImageKit file:', err);
+                }
+            }
+
             const uploadResponse = await imagekit.upload({
                 file: req.file.buffer,
                 fileName: `panti_${Date.now()}_${req.file.originalname}`,
                 folder: '/panti_items',
             });
+
             updateData.image_url = uploadResponse.url;
+            updateData.file_id = uploadResponse.fileId;
         }
 
         let parsedCategoryIds: number[] | undefined = undefined;
@@ -120,6 +132,19 @@ export const deleteItem = async (req: AuthRequest, res: Response) => {
         const id = Number(req.params.id);
         if (isNaN(id)) return res.status(400).json({ success: false, message: 'Invalid ID' });
 
+        const existing = await itemsService.getAdminItemById(id);
+        if (!existing) {
+            return res.status(404).json({ success: false, message: 'Item not found' });
+        }
+
+        if (existing.file_id) {
+            try {
+                await imagekit.deleteFile(existing.file_id);
+            } catch (err) {
+                console.error('Failed to delete ImageKit file:', err);
+            }
+        }
+
         await itemsService.deleteItemRecord(id);
         res.status(200).json({ success: true, message: 'Item deleted successfully.' });
     } catch (error) {
@@ -127,4 +152,3 @@ export const deleteItem = async (req: AuthRequest, res: Response) => {
         res.status(500).json({ success: false, message: 'Internal Server Error or Not Found' });
     }
 };
-
