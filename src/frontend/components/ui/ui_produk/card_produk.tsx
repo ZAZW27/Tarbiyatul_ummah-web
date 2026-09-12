@@ -25,6 +25,7 @@ export default function CardProduk({
     image_url, // failed linting -- keep it here for now
     file_id, // failed linting -- keep it here for now
     price,
+    stock,
     status,
     isAdmin,
 }: CardProdukProps) {
@@ -85,7 +86,11 @@ export default function CardProduk({
                     <h1 className="text-sm lg:text-lg ">{formatHarga(price)}</h1>
                 </div>
 
-                <div id="deskripsi_produk" className="pt-2 grow">
+                  <div id="harga_produk" className={`${secondaryFont.className}`}>
+                    <h1 className="text-sm lg:text-lg ">Stok Produk: {stock}</h1>
+                </div>
+
+                <div id="deskripsi_produk" className="pt-4 grow">
                     <p className="text-sm lg:text-lg">
                         {' '}
                         Deskripsi :{deskripsiFull}{' '}

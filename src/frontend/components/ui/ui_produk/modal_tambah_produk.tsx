@@ -1,6 +1,8 @@
 'use client';
 import { Fragment, useState, ChangeEvent } from 'react';
 import Image from 'next/image';
+import { createAdminItem } from '@/service/admin.service';
+
 import {
     Dialog,
     DialogPanel,
@@ -16,18 +18,19 @@ import {
 // import { tambahProduk } from "@/services/produk";
 // import { Produk } from "@/types/produk";
 
-const statusOption: Array<'Tersedia' | 'Habis'> = ['Tersedia', 'Habis'];
+const statusOption: Array<'active' | 'inactive'> = ['active', 'inactive'];
 
-const KategoriOption = ['Kerajinan Tangan', 'Aksesoris', 'Lainnya'];
+// const KategoriOption = ['Kerajinan Tangan', 'Aksesoris', 'Lainnya'];
 
 interface ModalTambahProdukProps {
-    onSuccess?: (produkBaru: any) => void;
+    onSuccess?: () => void;
 }
 
 const formKosong = {
     nama: '',
     deskripsi: '',
     harga: '',
+    stock:''
 };
 
 export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps) {
@@ -37,15 +40,13 @@ export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps)
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
     const [form, setForm] = useState(formKosong);
-    const [status, setStatus] = useState<'Tersedia' | 'Habis' | null>(null);
-    const [kategori, setKategori] = useState<string | null>(null);
+    const [status, setStatus] = useState<string>(statusOption[0]); // Default 'active'
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
     const resetForm = () => {
         setForm(formKosong);
-        setStatus(null);
-        setKategori(null);
+        setStatus(statusOption[0]);
         setImageFile(null);
         setPreviewUrl(null);
         setErrorMsg(null);
@@ -64,33 +65,38 @@ export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps)
         setPreviewUrl(URL.createObjectURL(file));
     };
 
+    const handleInputChange = (e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const {name, value} = e.target;
+        setForm((prev)=>({ ...prev, [name]:value}));
+    }
+
     const handleSubmit = async (e: React.SubmitEvent & { nativeEvent: SubmitEvent }) => {
         e.preventDefault();
-        console.log('HandleSubmit triggered! Current form data:', {
-            imageFile,
-            form,
-            status,
-        });
-        return;
 
-        // setErrorMsg(null);
-        // if (!imageFile) return setErrorMsg('Foto Produk Wajib Diisi');
-        // if (!form.nama) return setErrorMsg('Nama Produk Wajib Diisi');
-        // if (!form.harga) return setErrorMsg('Harga produk Wajib diisi');
-        // if (!status) return setErrorMsg('Status harus dipilih');
+        if (!form.nama || !form.harga || !form.stock || !imageFile || !form.deskripsi) {
+            setErrorMsg("Nama, Harga, Stock, Gambar, dan deskripsi wajib di isi ya");
+            return
+        }
+        setIsSubmitting(true);
+        setErrorMsg(null);
+        try {
+            const formData = new FormData();
+            formData.append('title', form.nama);
+            formData.append('description', form.deskripsi);
+            formData.append('price', form.harga);
+            formData.append('stock', form.stock);
+            formData.append('status', status);
+            formData.append('image', imageFile);
+            
+            await createAdminItem(formData);
 
-        // setIsSubmitting(true);
-        // try {
-        //     const ProdukBaru = 'Basil';
-        //     onSuccess?.(ProdukBaru); // Moved inside the block or declared outside
-        //     setIsOpen(false);
-        //     resetForm();
-        // } catch (err) {
-        //     setErrorMsg('Gagal menambahkan produk');
-        //     // err instanceof Error ? err.message :
-        // } finally {
-        //     setIsSubmitting(false);
-        // }
+            handleClose();
+            if (onSuccess) onSuccess();
+        } catch (err){
+            setErrorMsg(err instanceof Error ? err.message: 'Terjadi Kesalahan saat ingin menambahkan produk');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
     return (
         <>
@@ -140,18 +146,25 @@ export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps)
                                         <h1>X</h1>
                                     </button>
                                 </div>
+                                {errorMsg && (
+                                        <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-3 rounded mb-4 text-sm">
+                                            {errorMsg}
+                                        </div>
+                                    )}
 
                                 <form onSubmit={handleSubmit} className="space-y-4">
                                     {/* Foto produk */}
                                     <div className="flex items-center gap-4">
                                         <label
                                             htmlFor="foto-produk"
-                                            className="flex h-24 w-24 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-xl bg-gray-200"
+                                            className="flex h-36 w-36 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-xl bg-gray-200"
                                         >
                                             {previewUrl ? (
                                                 <Image
                                                     src={previewUrl}
                                                     alt="Preview"
+                                                    width={100}
+                                                                            height={100}
                                                     className="h-full w-full object-cover"
                                                 />
                                             ) : (
@@ -173,17 +186,51 @@ export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps)
                                         </label>
                                     </div>
 
-                                    {/* Status & Kategori — dua dropdown berdampingan */}
+                                    {/* Status  */}
                                     <div className="grid grid-cols-2 gap-3">
                                         <Listbox value={status} onChange={setStatus}>
+                                            {({ open }) => (
                                             <div className="relative">
                                                 <ListboxButton className="flex w-full items-center justify-between rounded-full bg-gray-800 px-4 py-2 text-sm font-medium text-white">
                                                     <span className="truncate">
                                                         {status ?? 'Pilih Status'}
                                                     </span>
-                                                    <h1>Down</h1>
+                                                    <h1>
+                                                         <Image
+                                                                           src={open ? "/icons/up_triangle.png" : "/icons/down_triangle.png"}
+                                                                            alt="well well well this isn't supposes to happened"
+                                                                            width={20}
+                                                                            height={20}
+                                                                            className="w-4 h-auto object-contain "
+                                                                        />
+
+                                                        
+                                                    </h1>
                                                 </ListboxButton>
-                                                <ListboxOptions className="absolute z-10 mt-1 w-full rounded-lg bg-white py-1 text-sm shadow-lg ring-1 ring-black/5 focus:outline-none">
+                                                   <Transition
+                    show={open}
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                >
+
+
+                    <ListboxOptions className="absolute z-10 mt-1 w-full rounded-lg bg-slate-300 py-1 text-sm shadow-lg ring-1 ring-black/5 focus:outline-none">
+                        {statusOption.map((opt) => (
+                            <ListboxOption
+                                key={opt}
+                                value={opt}
+                                className="cursor-pointer px-4 py-2 data-focus:bg-sky-50"
+                            >
+                                {opt}
+                            </ListboxOption>
+                        ))}
+                    </ListboxOptions>
+                </Transition>
+                                                {/* <ListboxOptions className="absolute z-10 mt-1 w-full rounded-lg  bg-slate-300 py-1 text-sm shadow-lg ring-1 ring-black/5 focus:outline-none">
                                                     {statusOption.map((opt) => (
                                                         <ListboxOption
                                                             key={opt}
@@ -195,11 +242,12 @@ export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps)
                                                             {opt}
                                                         </ListboxOption>
                                                     ))}
-                                                </ListboxOptions>
+                                                </ListboxOptions> */}
                                             </div>
+                                            )}
                                         </Listbox>
 
-                                        <Listbox value={kategori} onChange={setKategori}>
+                                        {/* <Listbox value={kategori} onChange={setKategori}>
                                             <div className="relative">
                                                 <ListboxButton className="flex w-full items-center justify-between rounded-full bg-gray-800 px-4 py-2 text-sm font-medium text-white">
                                                     <span className="truncate">
@@ -221,7 +269,7 @@ export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps)
                                                     ))}
                                                 </ListboxOptions>
                                             </div>
-                                        </Listbox>
+                                        </Listbox> */}
                                     </div>
 
                                     {/* Nama Produk */}
@@ -231,10 +279,9 @@ export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps)
                                         </label>
                                         <input
                                             type="text"
+                                            name="nama"
                                             value={form.nama}
-                                            onChange={(e) =>
-                                                setForm({ ...form, nama: e.target.value })
-                                            }
+                                            onChange={handleInputChange}
                                             className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-sky-500 focus:outline-none"
                                         />
                                     </div>
@@ -245,10 +292,9 @@ export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps)
                                             Deskripsi produk
                                         </label>
                                         <textarea
+                                        name = "deskripsi"
                                             value={form.deskripsi}
-                                            onChange={(e) =>
-                                                setForm({ ...form, deskripsi: e.target.value })
-                                            }
+                                            onChange={handleInputChange}
                                             rows={3}
                                             className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-sky-500 focus:outline-none"
                                         />
@@ -261,11 +307,25 @@ export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps)
                                         </label>
                                         <input
                                             type="number"
-                                            min={0}
+                                            name = "harga"
+                                            min= "0"
                                             value={form.harga}
-                                            onChange={(e) =>
-                                                setForm({ ...form, harga: e.target.value })
-                                            }
+                                            onChange={handleInputChange}
+                                            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-sky-500 focus:outline-none"
+                                        />
+                                    </div>
+
+                                    {/* Harga */}
+                                    <div>
+                                        <label className="mb-1 block text-sm font-medium text-gray-700">
+                                            Stok produk
+                                        </label>
+                                        <input
+                                            type="number"
+                                            name = "stock"
+                                             min= "0"
+                                            value={form.stock}
+                                            onChange={handleInputChange}
                                             className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-sky-500 focus:outline-none"
                                         />
                                     </div>
