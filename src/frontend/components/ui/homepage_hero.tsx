@@ -83,13 +83,12 @@ export default function HomePageHero() {
                     priority
                     className="object-cover"
                 />
-                {/* Darker + stronger gradient so text always has contrast */}
-                {/* Optional: side vignette so the left text column has extra darkness */}
+                {/* right to left gradient */}
                 <div className="absolute inset-0 bg-linear-to-r from-black/60 via-transparent to-transparent" />
+                {/* bottom to top gradient */}
                 <div className="absolute inset-0 bg-linear-to-t from-emerald-950/95 via-black/70 to-black/60" />
             </div>
 
-            {/* Content */}
             <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10 items-center min-h-140 md:min-h-130 px-6 py-12 md:p-16 max-w-7xl mx-auto">
                 <div className="order-2 md:order-1">
                     <div className="flex gap-5">
@@ -116,7 +115,6 @@ export default function HomePageHero() {
                     </div>
                 </div>
 
-                {/* RIGHT: headline */}
                 <div className="flex flex-col justify-center items-start md:items-end order-1 md:order-2">
                     <span className="text-emerald-400 text-xs md:text-sm font-semibold tracking-[0.3em] mb-3">
                         SELAMAT DATANG
