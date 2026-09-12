@@ -19,7 +19,7 @@ import {
 const statusOption: Array<"active" | "inactive"> = ["active", "inactive"];
 
 interface ModalEditProdukProps {
-    id: string;
+    id: number;
     nama: string;
     deskripsi: string;
     harga: number;
@@ -74,7 +74,7 @@ export default function ModalEditProduk({
    const handleSubmit = async (e: React.SubmitEvent & { nativeEvent: SubmitEvent }) => {
         e.preventDefault();
 
-        if (!form.nama || !form.harga || !form.stock || !form.deskripsi) {
+       if (!form.nama || !form.harga || form.stock === undefined || !form.deskripsi) {
             setErrorMsg("Nama, Harga, Stock, dan deskripsi wajib diisi ya");
             return;
         }
@@ -90,15 +90,11 @@ export default function ModalEditProduk({
             formData.append("status", status);
 
             // Gambar cuma dikirim kalau admin pilih file baru.
-            // ⚠️ ASUMSI: kalau field 'image' tidak dikirim, backend tetap pakai gambar lama
-            // (masuk akal karena upload.single('image') di route PUT bersifat opsional,
-            // tapi perlu dikonfirmasi ke ketua divisi teknis)
             if (imageFile) {
                 formData.append("image", imageFile);
             }
 
-            // ⚠️ ASUMSI: updateAdminItem(id, formData) — id dan FormData sebagai dua argumen terpisah.
-            // Coba share isi fungsi updateAdminItem (seperti createAdminItem kemarin) buat pastiin ini.
+    
             await updateAdminItem(id, formData);
 
             handleClose();
@@ -166,7 +162,7 @@ export default function ModalEditProduk({
                                     <div className="flex items-center gap-4">
                                         <label
                                             htmlFor="foto-edit"
-                                            className="flex h-24 w-24 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-xl bg-gray-200"
+                                            className="flex h-42 w-42 flex-shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-xl bg-gray-200"
                                         >
                                             {previewUrl ? (
                                                 <img src={previewUrl} alt="Preview" className="h-full w-full object-cover" />
@@ -200,9 +196,7 @@ export default function ModalEditProduk({
                                                     <ListboxOption
                                                         key={opt}
                                                         value={opt}
-                                                        className={({ active }) =>
-                                                            `cursor-pointer px-4 py-2 capitalize ${active ? "bg-sky-50" : ""}`
-                                                        }
+                                                        className="cursor-pointer px-4 py-2 data-focus:bg-sky-50"
                                                     >
                                                         {opt}
                                                     </ListboxOption>

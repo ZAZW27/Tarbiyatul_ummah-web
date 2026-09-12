@@ -6,6 +6,7 @@ import ModalDeleteProduk from './modal_delete_produkt';
 import { Produk } from '@/types/produk';
 import Link from 'next/link';
 import { Inter } from 'next/font/google';
+import ModalEditProduk from './modal_edit_produk';
 import ModalTambahProduk from './modal_tambah_produk';
 
 interface CardProdukProps extends Produk {
@@ -20,6 +21,7 @@ export const secondaryFont = Inter({
 });
 
 export default function CardProduk({
+    id,
     title,
     description,
     image_url, // failed linting -- keep it here for now
@@ -47,15 +49,18 @@ export default function CardProduk({
             {isAdmin && (
                 <div id="manipulation" className="flex flex-row items-end justify-end">
                     <div className="flex items-end justify-end">
-                        <button id="edit">
-                            <Image
-                                src="/images/icon_edit.png"
-                                alt="icon delete"
-                                width={500}
-                                height={500}
-                                className="w-14 h-auto object-contain"
-                            />
-                        </button>
+                      <ModalEditProduk
+                        id={id}
+                        nama = {title}
+                        deskripsi={description}
+                        harga={price}
+                        stock={stock}
+                        status={status}
+                        gambar={image_url}
+                        onSuccess={() => {
+
+                        }}
+                      />
                     </div>
 
                     <div className="flex items-end justify-end">
@@ -67,7 +72,7 @@ export default function CardProduk({
             <div id="thumbnail" className="flex items-center justify-center mb-4 ">
                 <Image
                     src="/images/dummy_produk_pic.png"
-                    alt="well well well this isn't supposes to happened"
+                    alt={title || "Gambar Produk"}
                     width={2000}
                     height={2000}
                     className="w-76 h-auto object-contain "
