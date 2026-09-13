@@ -25,9 +25,7 @@ export const login = async (req: Request, res: Response) => {
         );
 
         if (errors.length > 0) {
-            return res.status(400).json({
-                error: errors,
-            });
+            return res.status(400).json({ success: false, message: errors });
         }
 
         const token = await authService.authenticateUser(username, password);
@@ -41,7 +39,7 @@ export const login = async (req: Request, res: Response) => {
 
         res.status(200).json({ success: true, message: 'Login successul!' });
     } catch (error: any) {
-        res.status(401).json({ error: error.message || 'Authentication Failed' });
+        res.status(401).json({ success: false, error: error.message || 'Authentication Failed' });
     }
 };
 
