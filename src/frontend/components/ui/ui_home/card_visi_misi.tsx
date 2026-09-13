@@ -1,4 +1,5 @@
 import { TombolHijau } from '@/components/ui/buttons';
+import Link from 'next/link';
 
 export default function VisiMisiCard() {
     return (
@@ -17,9 +18,11 @@ export default function VisiMisiCard() {
             </div>
 
             <div className="px-8 pt-12 pb-8 ">
+                 <Link href="/about#visi_misi_tujuan">
                 <TombolHijau>
                     <p className="text-sm">Visi & Misi</p>
                 </TombolHijau>
+                </Link>
             </div>
         </section>
     );

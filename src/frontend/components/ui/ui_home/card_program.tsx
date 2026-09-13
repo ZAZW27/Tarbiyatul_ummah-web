@@ -2,11 +2,11 @@ import Image from 'next/image';
 
 export function ProgramCardPendidikan() {
     return (
-        <section className="relative flex flex-col rounded-xl overflow-hidden shadow-2xl w-full min-h-[200px]  md:text-lg  px-4 py-4 md:px-12">
+        <section className="cursor-pointer relative flex flex-col rounded-xl overflow-hidden w-full min-h-50 md:text-lg px-4 py-4 md:px-12 transition-all duration-300 ease-out shadow-lg hover:-translate-y-1.5 hover:shadow-emerald-700/50 hover:shadow-[0_20px_35px_-10px_rgba(0,0,0,0.5),0_0_25px_var(--tw-shadow-color)]">
             <Image
                 alt="Your Company"
                 src="/images/gambar_orang_nulis.jpg"
-                className="object-cover"
+                className="object-cover transition-transform duration-500 hover:scale-105"
 
                 priority
                 fill
@@ -36,7 +36,7 @@ export function ProgramCardPendidikan() {
 
 export function ProgramCardKeagamaan() {
     return (
-        <section className="relative flex flex-col rounded-xl overflow-hidden shadow-2xl w-full min-h-[200px]  md:text-lg  px-4 py-4 md:px-12">
+        <section className="cursor-pointer relative flex flex-col rounded-xl overflow-hidden w-full min-h-50 md:text-lg px-4 py-4 md:px-12 transition-all duration-300 ease-out shadow-lg hover:-translate-y-1.5 hover:shadow-emerald-700/50 hover:shadow-[0_20px_35px_-10px_rgba(0,0,0,0.5),0_0_25px_var(--tw-shadow-color)]">
             <Image
                 alt="Your Company"
                 src="/images/gambar_orang_nulis.jpg"

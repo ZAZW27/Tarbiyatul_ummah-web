@@ -50,7 +50,7 @@ export default function AboutPage() {
 
             <section
                 id="visi_misi_tujuan"
-                className="grid grid-cols-2 gap-4  items-top lg:grid-cols-3 px-4 lg:px-8"
+                className="scroll-mt-98 grid grid-cols-2 gap-4 items-top lg:grid-cols-3 px-4 lg:px-8"
             >
                 <div className="order-1 flex h-full w-full">
                     <CardVisiTujuanAbout
@@ -122,10 +122,10 @@ export default function AboutPage() {
 
             <section
                 id="fasilitas_pelayanan"
-                className="grid grid-cols-1 gap-4 md:grid-cols-2 mx-4 lg:mx-10 "
+                className="grid grid-cols-1 gap-4 md:grid-cols-2 mx-4 lg:mx-10 lg:pl-2 "
             >
                 <div className="text-emerald-500 text-xl font-semibold border-l-4 border-emerald-500  mt-12 lg:text-3xl">
-                    <p className="pl-2">Sasaran Pelayanan</p>
+                    <p className="pl-2">Fasilitas Pelayanan</p>
                 </div>
                 <div className="col-span-1 flex md:col-span-2 h-auto border-2 border-dashed border-gray-400">
                     <p className="text-justify text-lg md:text-xl ">
@@ -164,7 +164,7 @@ export default function AboutPage() {
 
             <section
                 id="struktur"
-                className="w-full grid grid-cols-1 lg:grid-cols-2 gap-2  pb-8  lg:pt-12 lg:pb-28 lg:border-none"
+                className="w-full grid grid-cols-1 lg:grid-cols-2 gap-2  pb-8  lg:pt-12 lg:pb-28 lg:border-none  lg:pl-2 "
             >
                 <div className="hidden lg:block font-bold text-emerald-500 tracking-wider text-2xl lg:text-3xl border-l-4 border-emerald-500 pl-4 mb-4 mx-10">
                     Struktur Pengurus LKSA Tarbiyatul Ummah
