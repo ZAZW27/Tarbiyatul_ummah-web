@@ -31,7 +31,7 @@ export const fetchCatalog = async (req: Request, res: Response) => {
         });
     } catch (error) {
         console.error('Error fetching market items:', error);
-        res.status(500).json({ error: 'Failed to fetch market items' });
+        res.status(500).json({ success: false, error: 'Failed to fetch market items' });
     }
 };
 
@@ -61,17 +61,18 @@ export const buyItem = async (req: Request, res: Response) => {
 
         if (errors.length > 0) {
             return res.status(400).json({
+                success: false,
                 error: errors,
             });
         }
 
         await marketService.executePurchase(Number(itemId), Number(quantity));
-        res.status(200).json({ message: 'Purchase completed successfully!' });
+        res.status(200).json({ success: true, message: 'Purchase completed successfully!' });
     } catch (error: unknown) {
         if (error instanceof Error) {
-            res.status(400).json({ error: error.message });
+            res.status(400).json({ success: false, error: error.message });
         } else {
-            res.status(400).json({ error: 'Purchase failed' });
+            res.status(400).json({ success: false, error: 'Purchase failed' });
         }
     }
 };

@@ -23,12 +23,13 @@ export const getMarketCatalog = async (
 };
 
 export const buyMarketItem = async (itemId: number, quantity: number) => {
-    const response = await fetch(`${API_BASE_URL}/market/buy`, {
+    const response = await fetch(`${API_BASE_URL}/market/purchase`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({ itemId, quantity }),
+        credentials: 'include',
     });
 
     const data = await response.json();
