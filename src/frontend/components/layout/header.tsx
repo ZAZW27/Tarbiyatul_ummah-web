@@ -8,6 +8,8 @@ import { logoutAdmin } from '@/service/auth.service';
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
+import BubbleField from '../misc/BubbleField';
+
 const navigation = [
     { name: 'Homepage', href: '/' },
     { name: 'Tentang Kami', href: '/about' },
@@ -73,30 +75,13 @@ export default function Header({ isAdmin = false }: headerProps) {
             <nav
                 className="
                     sticky top-0 z-50
-                    bg-gradient-to-br from-emerald-500 via-emerald-700 to-emerald-950
+                    bg-gradient-to-r from-emerald-950 via-emerald-800 to-emerald-600
                     shadow-lg shadow-emerald-950/30
                     after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0
                     after:h-px after:bg-white/15
                 "
             >
-                <div
-                    aria-hidden
-                    className="
-                        pointer-events-none absolute inset-0 opacity-60
-                        [background-image:
-                            radial-gradient(1px_1px_at_20%_30%,rgba(255,255,255,0.9),transparent_50%),
-                            radial-gradient(1px_1px_at_80%_20%,rgba(255,255,255,0.7),transparent_50%),
-                            radial-gradient(1.5px_1.5px_at_45%_70%,rgba(255,255,255,0.8),transparent_50%),
-                            radial-gradient(1px_1px_at_70%_80%,rgba(255,255,255,0.6),transparent_50%),
-                            radial-gradient(1px_1px_at_10%_75%,rgba(255,255,255,0.7),transparent_50%),
-                            radial-gradient(1.5px_1.5px_at_90%_55%,rgba(255,255,255,0.8),transparent_50%),
-                            radial-gradient(1px_1px_at_35%_15%,rgba(255,255,255,0.6),transparent_50%),
-                            radial-gradient(1px_1px_at_60%_45%,rgba(255,255,255,0.5),transparent_50%)
-                        ]
-                        [background-size:200px_200px]
-                        [background-repeat:repeat]
-                    "
-                />
+                <BubbleField variant="nav" />
 
                 <div className="relative mx-auto px-6 md:px-14 lg:px-16 h-20">
                     <div className="relative flex h-20 items-center justify-between">
@@ -184,26 +169,12 @@ export default function Header({ isAdmin = false }: headerProps) {
                         transition
                         className="
                             relative flex w-full max-w-rs flex-1 transform flex-col
-                            bg-gradient-to-br from-emerald-600 via-emerald-800 to-emerald-950
+                            bg-gradient-to-tr from-emerald-950 via-emerald-800 to-emerald-600
                             pb-4 pt-5 transition duration-300 ease-in-out
                             data-closed:translate-x-full
                         "
                     >
-                        <div
-                            aria-hidden
-                            className="
-                                pointer-events-none absolute inset-0 opacity-50
-                                [background-image:
-                                    radial-gradient(1px_1px_at_20%_30%,rgba(255,255,255,0.8),transparent_50%),
-                                    radial-gradient(1px_1px_at_80%_20%,rgba(255,255,255,0.6),transparent_50%),
-                                    radial-gradient(1.5px_1.5px_at_45%_70%,rgba(255,255,255,0.7),transparent_50%),
-                                    radial-gradient(1px_1px_at_70%_80%,rgba(255,255,255,0.5),transparent_50%),
-                                    radial-gradient(1px_1px_at_10%_75%,rgba(255,255,255,0.6),transparent_50%)
-                                ]
-                                [background-size:160px_160px]
-                                [background-repeat:repeat]
-                            "
-                        />
+                        <BubbleField variant="drawer" />
 
                         <div className="absolute right-4 top-4 z-10">
                             <button
