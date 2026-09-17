@@ -176,10 +176,12 @@ export default function ModalEditProduk({
                                             className="flex cursor-pointer items-center justify-center overflow-hidden rounded-xl bg-gray-200"
                                         >
                                             {previewUrl ? (
-                                                <img
+                                                <Image
                                                     src={previewUrl}
                                                     alt="Preview"
                                                     className="h-full w-full object-cover"
+                                                    width={250}
+                                                    height={250}
                                                 />
                                             ) : (
                                                 <span className="text-xs text-gray-400">

@@ -79,7 +79,7 @@ export default function HomePageHero() {
             >
                 <Image
                     alt="LKSA Tarbiyatul Ummah"
-                    src="/images/hero_image_LKSA.png"
+                    src="/images/hero_image_LKSA.webp"
                     fill
                     priority
                     className="object-cover"

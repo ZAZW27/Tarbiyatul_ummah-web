@@ -43,6 +43,7 @@ export default function Login() {
                         className="mx-auto h-26 w-auto"
                         height={100}
                         width={100}
+                        priority
                     />
                     <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">
                         Silahkan Login ke Akun Anda{' '}

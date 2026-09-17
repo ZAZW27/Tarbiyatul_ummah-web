@@ -3,13 +3,13 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import ModalGaleri from './modal_galeri';
-import Link from 'next/link';
 import { Gallery } from '@/types/gallery';
 import ModalDeleteMedia from './modal_delete_media';
 import ModalEditMedia from './modal_edit_media';
 
 interface CardGalleryProps extends Gallery {
     isAdmin: boolean;
+    priority?: boolean;
 }
 
 export default function CardGallery({
@@ -23,6 +23,7 @@ export default function CardGallery({
     file_id,
     status,
     isAdmin,
+    priority = false,
 }: CardGalleryProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [expandedDesc, setExpanedDesc] = useState(false);
@@ -48,7 +49,7 @@ export default function CardGallery({
             >
                 {/* Foto */}
                 <div
-                    className="relative h-80 w-full cursor-pointer overflow-hidden"
+                    className="relative h-60 md:h-80 w-full cursor-pointer overflow-hidden"
                     onClick={() => setIsOpen(true)}
                 >
                     <Image
@@ -56,6 +57,7 @@ export default function CardGallery({
                         alt={title || 'Gambar Media'}
                         fill
                         className="object-cover transition duration-300 group-hover:scale-105"
+                        priority={priority}
                     />
 
                     {isAdmin && (

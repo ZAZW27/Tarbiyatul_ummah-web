@@ -7,10 +7,7 @@ import { TombolHijau } from '@/components/ui/buttons';
 export default function HubungiKami() {
     return (
         <main className="flex flex-col w-full gap-8 bg-gray-100">
-            <section
-                id="HubungiKami"
-                className="flex flex-col items-center justify-center border border-dashed border-gray-400 "
-            >
+            <section id="HubungiKami" className="flex flex-col items-center justify-center  ">
                 <div className="flex flex-col justify-center items-center mt-4 mx-2">
                     <div className="flex items-center justify-center pb-1.5 w-full ">
                         <p className="font-bold text-emerald-600 text-xl border-b-2 border-emerald-500 px-18 pb-1 md:px-26 lg:px-44">
@@ -29,14 +26,11 @@ export default function HubungiKami() {
 
             <section
                 id="CardHubungi"
-                className=" grid grid-cols-1 lg:grid-cols-2 items-center justify-center  border border-dashed border-gray-400 lg:px-12"
+                className=" grid grid-cols-1 lg:grid-cols-2 items-center justify-center   lg:px-12"
             >
                 {/* =============================== WHATSAPP SECTION ======================================== */}
 
-                <div
-                    id="WhatsappCard"
-                    className="w-full  border border-dashed border-gray-400 py-4 px-4"
-                >
+                <div id="WhatsappCard" className="w-full   py-4 px-4">
                     <div id="mobile" className="md:hidden">
                         <CardHubungiMobile
                             bgImageSrc="/images/whatsapp.png"
@@ -46,6 +40,8 @@ export default function HubungiKami() {
                             buttonIconSrc="/icons/whatsapp_vector.png"
                             buttonIconAlt="icon whatsapp"
                             buttonText="Hubungi Kami Melalui Whatsapp"
+                            href="https://wa.me/6282141683655?text=Halo%20saya%20ingin%20bertanya"
+                            priority={true}
                         />
                     </div>
 
@@ -58,16 +54,15 @@ export default function HubungiKami() {
                             buttonIconSrc="/icons/whatsapp_vector.png"
                             buttonIconAlt="icon whatsapp"
                             buttonText="Hubungi Kami Melalui Whatsapp"
+                            href="https://wa.me/6282141683655?text=Halo%20saya%20ingin%20bertanya"
+                            priority={true}
                         />
                     </div>
                 </div>
 
                 {/* =============================== EMAIL SECTION ======================================== */}
 
-                <div
-                    id="emailCard"
-                    className="w-full  border border-dashed border-gray-400 py-4 px-4"
-                >
+                <div id="emailCard" className="w-full   py-4 px-4">
                     <div id="mobile" className="md:hidden">
                         <CardHubungiMobile
                             bgImageSrc="/images/email.png"
@@ -77,6 +72,7 @@ export default function HubungiKami() {
                             buttonIconSrc="/icons/email_vector.png"
                             buttonIconAlt="icon email"
                             buttonText="Hubungi Kami Melalui Email"
+                            href="mailto:Tarbiyatulummah888@gmail.com?subject=Pertanyaan%20Seputar%20Yayasan"
                         />
                     </div>
 
@@ -89,6 +85,7 @@ export default function HubungiKami() {
                             buttonIconSrc="/icons/email_vector.png"
                             buttonIconAlt="icon email"
                             buttonText="Hubungi Kami Melalui Gmail"
+                            href="mailto:Tarbiyatulummah888@gmail.com?subject=Pertanyaan%20Seputar%20Yayasan"
                         />
                     </div>
                 </div>
@@ -124,7 +121,7 @@ export default function HubungiKami() {
                             IconImageSrc="/images/icon_email_hijau.png"
                             IconImageAlt="icon email ijo"
                             title="Email"
-                            description="LKSAtarbiyatulUmmahBalikpapan@gmail.com"
+                            description="Tarbiyatulummah888@gmail.com"
                         />
                     </div>
 
@@ -133,7 +130,7 @@ export default function HubungiKami() {
                             IconImageSrc="/images/icon_map_hijau.png"
                             IconImageAlt="icon map ijo"
                             title="Alamat"
-                            description="Kalimantan Timur, Balikpapan Jl. Soekarno Hatta KM 8 RT 68, Kelurahan Batu Ampar Balikpapan Utara"
+                            description="Kalimantan Timur, Balikpapan Jl. Soekarno Hatta KM 8 RT 68, Kelurahan graha indah Balikpapan Utara"
                         />
                     </div>
                 </div>
@@ -149,10 +146,12 @@ export default function HubungiKami() {
                 </div>
 
                 <div className="flex items-center justify-center mb-6 lg:col-span-2 lg:mt-4">
-                    <TombolHijau>
-                        {' '}
-                        <p>Dapatkan Alamat</p>{' '}
-                    </TombolHijau>
+                    <a href="https://maps.app.goo.gl/12L7PDV54pu1Nv4B7">
+                        <TombolHijau>
+                            {' '}
+                            <p>Dapatkan Alamat</p>{' '}
+                        </TombolHijau>
+                    </a>
                 </div>
             </section>
         </main>

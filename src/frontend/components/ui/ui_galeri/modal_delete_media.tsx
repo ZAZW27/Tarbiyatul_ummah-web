@@ -24,7 +24,7 @@ export default function ModalDeleteMedia({ id, nama, onSuccess }: modalDeleteMed
         setIsSubmitting(true);
         setErrorMsg(null);
         try {
-            await deleteAdminItem(id); // Memanggil API hapus dengan ID
+            await deleteAdminItem(id);
             (toast.success('Foto berhasil DIHAPUS!', {
                 className: '!bg-black !text-green !border-emerald  !mt-12 !py-4 !px-6 !text-base',
             }),

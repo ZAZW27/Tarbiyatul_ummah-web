@@ -2,17 +2,7 @@
 import { Fragment, useState, ChangeEvent } from 'react';
 import Image from 'next/image';
 import { updateAdminItem } from '@/service/admin.service';
-import {
-    Dialog,
-    DialogPanel,
-    DialogTitle,
-    Transition,
-    TransitionChild,
-    Listbox,
-    ListboxButton,
-    ListboxOptions,
-    ListboxOption,
-} from '@headlessui/react';
+import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 
@@ -161,10 +151,12 @@ export default function ModalEditMedia({
                                             className="flex h-42 w-42 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-xl bg-gray-200"
                                         >
                                             {previewUrl ? (
-                                                <img
+                                                <Image
                                                     src={previewUrl}
                                                     alt="Preview"
                                                     className="h-full w-full object-cover"
+                                                    width={250}
+                                                    height={250}
                                                 />
                                             ) : (
                                                 <span className="text-xs text-gray-400">

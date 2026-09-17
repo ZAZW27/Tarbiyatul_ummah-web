@@ -1,5 +1,6 @@
 // import Image from "next/image";
 import { ProgramCardPendidikan, ProgramCardKeagamaan } from './card_program';
+import Link from 'next/link';
 
 export default function ProgramKamiSection() {
     return (
@@ -18,8 +19,13 @@ export default function ProgramKamiSection() {
                 </h1>
 
                 <div className="flex flex-col gap-6 mt-6 w-full items-center">
-                    <ProgramCardPendidikan />
-                    <ProgramCardKeagamaan />
+                    <Link href="/about#program">
+                        <ProgramCardPendidikan />
+                    </Link>
+
+                    <Link href="/about#program">
+                        <ProgramCardKeagamaan />
+                    </Link>
                 </div>
             </div>
         </section>

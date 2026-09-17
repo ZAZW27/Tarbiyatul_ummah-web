@@ -1,6 +1,5 @@
 'use client';
 import { Produk } from '@/types/produk';
-import { getMarketCatalog } from '@/service/market.service';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRef } from 'react';
@@ -122,16 +121,14 @@ export default function ProdukCarausel({ produkList }: ProdukCarouselHomeProps) 
                                 <h3 className="truncate text-base font-semibold text-neutral-800">
                                     {item.title}
                                 </h3>
-                                <p className="mt-1 line-clamp-2 text-xs text-neutral-500">
+                                <p className="mt-1 line-clamp-2 text-xs text-black">
                                     {item.description}
                                 </p>
                             </div>
 
                             <div className="mt-3 flex items-center justify-between border-t border-neutral-100 pt-3">
                                 <div>
-                                    <span className="block text-[10px] text-neutral-400">
-                                        Harga
-                                    </span>
+                                    <span className="block text-[10px] text-black">Harga</span>
                                     <p className={`${secondaryFont.className}`}>
                                         Rp {Number(item.price || 0).toLocaleString('id-ID')}
                                     </p>
