@@ -40,10 +40,10 @@ export default function AboutPage() {
                 <div className=" flex h-auto w-auto items-center justify-center rounded-4xl  px-4 lg:mr-12">
                     <Image
                         alt="Your Company"
-                        src="/images/plang_lksa_mobile.png"
+                        src="/images/image_about_lksa.png"
                         className=" md:rounded-2xl object-cover w-full h-auto shadow-md"
-                        width={1000}
-                        height={1000}
+                        width={500}
+                        height={500}
                     />
                 </div>
             </section>

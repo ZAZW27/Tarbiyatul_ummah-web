@@ -1,11 +1,15 @@
 // import Image from 'next/image';
 // import Link from 'next/link';
 import HomePageHero from '@/components/ui/homepage_hero';
+import ProdukSectionServer from '@/components/ui/ui_home/produk_section_server';
+import MediaSectionServer from '@/components/ui/ui_home/media_section_server';
+
 //
 import ProgramKamiSection from '@/components/ui/ui_home/programkami_section';
 import VisiMisiCard from '@/components/ui/ui_home/card_visi_misi';
 import { CardSasaranPelayanan } from '@/components/ui/ui_home/card_sasaran_pelayanan';
 import { CardFasilitasMasjid, CardFasilitasMotor } from '@/components/ui/ui_home/card_fasilitas';
+import ProdukCarausel from '@/components/ui/ui_home/caraousel_produk';
 
 export default function Homepage() {
     return (
@@ -80,17 +84,19 @@ export default function Homepage() {
             </section>
 
             {/* untuk section sasaran pelayanan */}
-            <section id="galeri_section">
-                <div className="flex h-48 w-full items-center justify-center border-2 border-dashed border-gray-400">
-                    <span className="text-gray-500">Placehodler: Galeri</span>
-                </div>
+            <section
+                id="produk_section"
+                className="w-full max-w-full overflow-hidden px-4 sm:px-6 "
+            >
+                <MediaSectionServer />
             </section>
 
             {/* untuk section sasaran pelayanan */}
-            <section id="produk_section">
-                <div className="flex h-44 w-full items-center justify-center border-2 border-dashed border-gray-400">
-                    <section className="text-gray-500">Placeholde: produk </section>
-                </div>
+            <section
+                id="produk_section"
+                className="w-full max-w-full overflow-hidden px-4 sm:px-6 mb-20"
+            >
+                <ProdukSectionServer />
             </section>
         </main>
     );

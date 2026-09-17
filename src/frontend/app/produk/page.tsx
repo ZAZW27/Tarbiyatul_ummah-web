@@ -4,6 +4,8 @@ import { getMarketCatalog } from '@/service/market.service';
 import ProdukList from '@/components/ui/ui_produk/produk_list';
 import { cookies } from 'next/headers';
 
+export const dynamic = 'force-dynamic';
+
 export default async function ProdukPage() {
     const cookieStore = cookies();
     const isAdmin = (await cookieStore).has('admin_session');

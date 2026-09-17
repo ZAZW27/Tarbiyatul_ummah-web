@@ -7,14 +7,14 @@ import { deleteAdminItem } from '@/service/admin.service';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 
-interface modalDeleteProdukProps {
+interface modalDeleteMediaProps {
     id: number;
     nama: string;
     onSuccess?: () => void;
 }
 
-export default function ModalDeleteProduk({ id, nama, onSuccess }: modalDeleteProdukProps) {
-    const router = useRouter(); // Inisialisasi router
+export default function ModalDeleteMedia({ id, nama, onSuccess }: modalDeleteMediaProps) {
+    const router = useRouter();
 
     const [openDelete, setOpenDelete] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -25,17 +25,15 @@ export default function ModalDeleteProduk({ id, nama, onSuccess }: modalDeletePr
         setErrorMsg(null);
         try {
             await deleteAdminItem(id); // Memanggil API hapus dengan ID
-
-            (toast.success('Produk berhasil DIHAPUS!', {
+            (toast.success('Foto berhasil DIHAPUS!', {
                 className: '!bg-black !text-green !border-emerald  !mt-12 !py-4 !px-6 !text-base',
             }),
                 setOpenDelete(false));
             router.refresh();
-
-            if (onSuccess) onSuccess();
+            if (onSuccess) onSuccess(); // Memicu pembaruan data di parent komponen
         } catch (err) {
             setErrorMsg(
-                err instanceof Error ? err.message : 'Terjadi kesalahan saat menghapus produk',
+                err instanceof Error ? err.message : 'Terjadi kesalahan saat menghapus media',
             );
         } finally {
             setIsSubmitting(false);
@@ -56,7 +54,7 @@ export default function ModalDeleteProduk({ id, nama, onSuccess }: modalDeletePr
                     alt="icon delete"
                     width={50}
                     height={50}
-                    className="w-10 h-auto object-contain"
+                    className="w-12 h-auto object-contain"
                 />
             </button>
             <Dialog open={openDelete} onClose={handleClose} className="relative z-10">
@@ -84,17 +82,17 @@ export default function ModalDeleteProduk({ id, nama, onSuccess }: modalDeletePr
                                             as="h3"
                                             className="text-base font-semibold text-white"
                                         >
-                                            Hapus Produk
+                                            HAPUS MEDIA
                                         </DialogTitle>
                                         <div className="mt-2">
                                             <p className="text-sm text-gray-400">
-                                                Apakah anda yakin ingin menghapus produk
+                                                Apakah anda yakin ingin menghapus media
                                                 <span className="font-bold text-white">
                                                     {' '}
                                                     {nama}
                                                 </span>
                                                 ? tindakan ini tidak akan bisa di balikkan. Pastikan
-                                                anda benar-benar yakin untuk menghapus produk ini.
+                                                anda benar-benar yakin untuk menghapus media ini.
                                             </p>
                                         </div>
                                         {/* if error */}
@@ -113,7 +111,7 @@ export default function ModalDeleteProduk({ id, nama, onSuccess }: modalDeletePr
                                     disabled={isSubmitting}
                                     className="inline-flex w-full justify-center rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white hover:bg-red-400 sm:ml-3 sm:w-auto"
                                 >
-                                    {isSubmitting ? 'MENGHAPUS...' : 'HAPUS PRODUK'}
+                                    {isSubmitting ? 'MENGHAPUS...' : 'HAPUS MEDIA'}
                                 </button>
                                 <button
                                     type="button"

@@ -7,13 +7,12 @@ import { Produk } from '@/types/produk';
 import Link from 'next/link';
 import { Inter } from 'next/font/google';
 import ModalEditProduk from './modal_edit_produk';
-import ModalTambahProduk from './modal_tambah_produk';
+import ModalProduk from './modal_produk';
 
 interface CardProdukProps extends Produk {
     isAdmin: boolean;
 }
 
-// 1. Define your different font here
 export const secondaryFont = Inter({
     subsets: ['latin'],
     display: 'swap',
@@ -30,12 +29,14 @@ export default function CardProduk({
     stock,
     status,
     isAdmin,
+    category,
 }: CardProdukProps) {
     // const isImageValid = .image_url && (produk.image_url.startsWith('http') || produk.image_url.startsWith('/'));
     const kontakWhatsapp = 6289602601506; // yusuf
     const [expandedDesc, setExpanedDesc] = useState(false);
 
-    const formatHarga = (angka: number) => `Rp ${angka.toLocaleString('id-ID')},00`;
+    const [isOpen, setIsOpen] = useState(false);
+
     const wa_link = ` https://wa.me/${kontakWhatsapp}?text=${encodeURIComponent(`Halo, saya tertarik dengan produk "${title}"`)}`;
 
     const batasKarakter = 40;
@@ -45,7 +46,13 @@ export default function CardProduk({
         : description.slice(0, batasKarakter) + (cuttingEdge ? '...' : '');
 
     return (
-        <div className="relative flex flex-col bg-[#e6efeb] outline-2 outline-[#72e5b5] rounded-xl max-w-56 lg:max-w-70 w-full mt-2 overflow-hidden h-full">
+        <div
+            className="
+            transition duration-300
+                    hover:-translate-y-2
+                    hover:shadow-xl
+        relative flex flex-col bg-[#e6efeb] outline-2 outline-[#72e5b5] rounded-xl max-w-56 lg:max-w-70 w-full mt-2 overflow-hidden h-full"
+        >
             {isAdmin && (
                 <div
                     id="manipulation"
@@ -71,14 +78,15 @@ export default function CardProduk({
 
             <div
                 id="thumbnail"
-                className="relative w-full h-48 lg:h-56 bg-[#e6efeb] overflow-hidden mb-4"
+                className="relative w-full h-48 lg:h-70 bg-[#e6efeb] overflow-hidden mb-4"
+                onClick={() => setIsOpen(true)}
             >
                 <Image
                     src={image_url || '/images/dummy_produk_pic.png'}
                     alt={title || 'Gambar Produk'}
                     width={100}
                     height={100}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition duration-300 group-hover:scale-105"
                 />
             </div>
 
@@ -91,7 +99,7 @@ export default function CardProduk({
                 </div>
 
                 <div id="harga_produk" className={`${secondaryFont.className}`}>
-                    <h1 className="text-sm lg:text-lg ">{formatHarga(price)}</h1>
+                    Rp {Number(price || 0).toLocaleString('id-ID')}
                 </div>
 
                 <div id="harga_produk" className={`${secondaryFont.className}`}>
@@ -166,6 +174,21 @@ export default function CardProduk({
                     </Link>
                 </div>
             </div>
+            {/* Modal */}
+            <ModalProduk
+                isOpen={isOpen}
+                onClose={() => setIsOpen(false)}
+                isAdmin={isAdmin}
+                title={title}
+                id={id}
+                description={description}
+                price={price}
+                stock={stock}
+                status={status}
+                image_url={image_url}
+                file_id={file_id}
+                category={category}
+            />
         </div>
     );
 }

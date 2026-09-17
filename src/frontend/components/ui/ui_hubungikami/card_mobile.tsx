@@ -44,15 +44,15 @@ export function CardHubungiMobile({
             <div id="bottom" className="flex flex-col items-center justify-center w-full pb-4 ">
                 <button className="  bg-green-500 p-2 cursor-pointer justify-center items-center flex flex-row rounded-full w-[90%] ">
                     <div className="flex flex-row items-center justify-center gap-6 w-full py-1">
-                        <div className="flex items-center">
+                        {/* <div className="flex items-center">
                             <Image
                                 src={buttonIconSrc}
                                 alt={buttonIconAlt}
                                 width={30}
                                 height={30}
-                                className=""
+                                className="h-2 w-2 object-cover"
                             />
-                        </div>
+                        </div> */}
 
                         <div className="flex items-center">
                             <p>{buttonText}</p>

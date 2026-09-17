@@ -2,16 +2,16 @@
 
 import { Fragment } from 'react';
 import Image from 'next/image';
-import { Gallery } from '@/types/gallery';
+import { Produk } from '@/types/produk';
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
 
-interface ModalGaleriProps extends Gallery {
+interface ModalProdukProps extends Produk {
     isOpen: boolean;
     onClose: () => void;
     isAdmin: boolean;
 }
 
-export default function ModalGaleri({
+export default function ModalProduk({
     isOpen,
     onClose,
 
@@ -23,9 +23,8 @@ export default function ModalGaleri({
     image_url,
     file_id,
     status,
-    category,
     isAdmin,
-}: ModalGaleriProps) {
+}: ModalProdukProps) {
     return (
         <Transition show={isOpen} as={Fragment}>
             <Dialog onClose={onClose} className="relative z-50">
@@ -57,7 +56,7 @@ export default function ModalGaleri({
                             {/* Header */}
                             <div className="sticky top-0 z-10 flex items-center justify-between bg-white px-6 py-4 border-b border-gray-100">
                                 <DialogTitle className="text-xl font-bold text-[#008F4C]">
-                                    Detail {title}
+                                    Produk: {title}
                                 </DialogTitle>
 
                                 <button

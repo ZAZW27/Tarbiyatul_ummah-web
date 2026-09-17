@@ -108,10 +108,10 @@ export default function HomePageHero() {
                                 dan juga sosial agar menjadi pribadi yang baik dan peduli terhadap
                                 sesama.
                             </p>
-                             <Link href="/about">
-                            <TombolHijau>
-                                <span>Tentang Kami</span>
-                            </TombolHijau>
+                            <Link href="/about">
+                                <TombolHijau>
+                                    <span>Tentang Kami</span>
+                                </TombolHijau>
                             </Link>
                         </div>
                     </div>

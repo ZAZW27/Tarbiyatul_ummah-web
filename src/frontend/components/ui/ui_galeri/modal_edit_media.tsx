@@ -13,33 +13,25 @@ import {
     ListboxOptions,
     ListboxOption,
 } from '@headlessui/react';
-import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
-const statusOption: Array<'active' | 'sold'> = ['active', 'sold'];
-
-interface ModalEditProdukProps {
+interface ModalEditMediaProps {
     id: number;
     nama: string;
     deskripsi: string;
-    harga: number;
-    stock: number;
-    status: 'active' | 'sold';
     gambar: string; // URL gambar yang sudah ada (dari field image_url di database)
     onSuccess?: () => void;
 }
 
-export default function ModalEditProduk({
+export default function ModalEditMedia({
     id,
     nama,
     deskripsi,
-    harga,
-    stock,
-    status: statusAwal,
     gambar,
     onSuccess,
-}: ModalEditProdukProps) {
-    const router = useRouter(); // Inisialisasi router
+}: ModalEditMediaProps) {
+    const router = useRouter();
 
     const [isOpen, setIsOpen] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -48,10 +40,7 @@ export default function ModalEditProduk({
     const [form, setForm] = useState({
         nama,
         deskripsi,
-        harga: String(harga),
-        stock: String(stock),
     });
-    const [status, setStatus] = useState<string>(statusAwal);
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(gambar); // default: gambar lama
 
@@ -76,8 +65,8 @@ export default function ModalEditProduk({
     const handleSubmit = async (e: React.SubmitEvent & { nativeEvent: SubmitEvent }) => {
         e.preventDefault();
 
-        if (!form.nama || !form.harga || form.stock === undefined || !form.deskripsi) {
-            setErrorMsg('Nama, Harga, Stock, dan deskripsi wajib diisi ya');
+        if (!form.nama || !form.deskripsi) {
+            setErrorMsg('Nama,dan deskripsi wajib diisi ya');
             return;
         }
 
@@ -87,9 +76,6 @@ export default function ModalEditProduk({
             const formData = new FormData();
             formData.append('title', form.nama);
             formData.append('description', form.deskripsi);
-            formData.append('price', form.harga);
-            formData.append('stock', form.stock);
-            formData.append('status', status);
 
             // Gambar cuma dikirim kalau admin pilih file baru.
             if (imageFile) {
@@ -97,7 +83,7 @@ export default function ModalEditProduk({
             }
 
             await updateAdminItem(id, formData);
-            (toast.success('Produk berhasil Di EDIT!', {
+            (toast.success('MEDIA berhasil Di EDIT!', {
                 className:
                     '!bg-yellow-600 !text-white !border-white  !mt-12 !py-4 !px-6 !text-base',
             }),
@@ -106,7 +92,7 @@ export default function ModalEditProduk({
             onSuccess?.();
         } catch (err) {
             setErrorMsg(
-                err instanceof Error ? err.message : 'Terjadi kesalahan saat mengubah produk',
+                err instanceof Error ? err.message : 'Terjadi kesalahan saat mengubah Media',
             );
         } finally {
             setIsSubmitting(false);
@@ -121,7 +107,7 @@ export default function ModalEditProduk({
                     alt="icon edit"
                     width={50}
                     height={50}
-                    className="w-10 h-auto object-contain"
+                    className="w-12 h-auto object-contain"
                 />
             </button>
 
@@ -152,7 +138,7 @@ export default function ModalEditProduk({
                             <DialogPanel className="flex max-h-[92vh] w-full flex-col overflow-y-auto rounded-t-3xl bg-white p-6 sm:max-h-[85vh] sm:max-w-md sm:rounded-3xl">
                                 <div className="mb-4 flex items-center justify-between">
                                     <DialogTitle className="text-lg font-semibold text-gray-800">
-                                        Edit Produk
+                                        Edit Media
                                     </DialogTitle>
                                     <button
                                         onClick={handleClose}
@@ -169,11 +155,10 @@ export default function ModalEditProduk({
                                 )}
 
                                 <form onSubmit={handleSubmit} className="space-y-4">
-                                    {/* gambar */}
-                                    <div className="flex flex-col items-center justify-center gap-3 mb-10">
+                                    <div className="flex items-center gap-4">
                                         <label
                                             htmlFor="foto-edit"
-                                            className="flex cursor-pointer items-center justify-center overflow-hidden rounded-xl bg-gray-200"
+                                            className="flex h-42 w-42 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-xl bg-gray-200"
                                         >
                                             {previewUrl ? (
                                                 <img
@@ -202,28 +187,6 @@ export default function ModalEditProduk({
                                         </label>
                                     </div>
 
-                                    <Listbox value={status} onChange={setStatus}>
-                                        <div className="relative">
-                                            <ListboxButton className="flex w-full items-center justify-between rounded-full bg-gray-800 px-4 py-2 text-sm font-medium text-white">
-                                                <span className="truncate capitalize">
-                                                    {status}
-                                                </span>
-                                                <span>▾</span>
-                                            </ListboxButton>
-                                            <ListboxOptions className="absolute z-10 mt-1 w-full rounded-lg bg-white py-1 text-sm shadow-lg ring-1 ring-black/5 focus:outline-none">
-                                                {statusOption.map((opt) => (
-                                                    <ListboxOption
-                                                        key={opt}
-                                                        value={opt}
-                                                        className="cursor-pointer px-4 py-2 data-focus:bg-sky-50"
-                                                    >
-                                                        {opt}
-                                                    </ListboxOption>
-                                                ))}
-                                            </ListboxOptions>
-                                        </div>
-                                    </Listbox>
-
                                     <div>
                                         <label className="mb-1 block text-sm font-medium text-gray-700">
                                             Nama Produk
@@ -246,34 +209,6 @@ export default function ModalEditProduk({
                                             value={form.deskripsi}
                                             onChange={handleInputChange}
                                             rows={3}
-                                            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-sky-500 focus:outline-none"
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label className="mb-1 block text-sm font-medium text-gray-700">
-                                            Harga produk
-                                        </label>
-                                        <input
-                                            type="number"
-                                            name="harga"
-                                            min={0}
-                                            value={form.harga}
-                                            onChange={handleInputChange}
-                                            className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-sky-500 focus:outline-none"
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <label className="mb-1 block text-sm font-medium text-gray-700">
-                                            Stock
-                                        </label>
-                                        <input
-                                            type="number"
-                                            name="stock"
-                                            min={0}
-                                            value={form.stock}
-                                            onChange={handleInputChange}
                                             className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-sky-500 focus:outline-none"
                                         />
                                     </div>
