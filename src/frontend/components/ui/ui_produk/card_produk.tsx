@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react'; // failed linting (useEffect was declared but never used) -- Biarin aja dulu
+import { useState } from 'react'; // failed linting (useEffect was declared but never used) -- Biarin aja dulu
 import Image from 'next/image';
 import ModalDeleteProduk from './modal_delete_produkt';
 import { Produk } from '@/types/produk';
@@ -11,6 +11,7 @@ import ModalProduk from './modal_produk';
 
 interface CardProdukProps extends Produk {
     isAdmin: boolean;
+    priority?: boolean;
 }
 
 export const secondaryFont = Inter({
@@ -30,9 +31,10 @@ export default function CardProduk({
     status,
     isAdmin,
     category,
+    priority = false,
 }: CardProdukProps) {
     // const isImageValid = .image_url && (produk.image_url.startsWith('http') || produk.image_url.startsWith('/'));
-    const kontakWhatsapp = 6289602601506; // yusuf
+    const kontakWhatsapp = 6282141683655; // pak abdi ahadi
     const [expandedDesc, setExpanedDesc] = useState(false);
 
     const [isOpen, setIsOpen] = useState(false);
@@ -84,8 +86,9 @@ export default function CardProduk({
                 <Image
                     src={image_url || '/images/dummy_produk_pic.png'}
                     alt={title || 'Gambar Produk'}
-                    width={100}
-                    height={100}
+                    width={250}
+                    height={250}
+                    priority={priority}
                     className="w-full h-full object-cover transition duration-300 group-hover:scale-105"
                 />
             </div>

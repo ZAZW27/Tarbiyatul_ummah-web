@@ -223,7 +223,7 @@ export default function ModalTambahMedia({ onSuccess }: ModalTambahMediaProps) {
                                             className="flex flex-1 items-center justify-center gap-2 rounded-full bg-green-500 py-3 font-semibold text-white transition hover:bg-green-600 disabled:opacity-60"
                                         >
                                             {isSubmitting}
-                                            {isSubmitting ? 'Menyimpan...' : 'Tambahkan Produk'}
+                                            {isSubmitting ? 'Menyimpan...' : 'Tambahkan Foto'}
                                         </button>
                                     </div>
                                 </form>

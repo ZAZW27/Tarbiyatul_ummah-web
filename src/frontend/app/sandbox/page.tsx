@@ -37,9 +37,9 @@ export default function SandBox() {
                   />
                 </div> */}
 
-                <div>
+                {/* <div>
                     <CardProduk />
-                </div>
+                </div> */}
 
                 {/* <div className="">
                     <CardFasilitasMotor/>

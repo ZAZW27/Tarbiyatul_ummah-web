@@ -8,6 +8,8 @@ interface CardHubungiDesktopProps {
     buttonIconSrc: string;
     buttonIconAlt: string;
     buttonText: string;
+    href: string;
+    priority?: boolean;
 }
 
 export function CardHubungiDesktop({
@@ -18,6 +20,8 @@ export function CardHubungiDesktop({
     buttonIconSrc,
     buttonIconAlt,
     buttonText,
+    href,
+    priority = false,
 }: CardHubungiDesktopProps) {
     return (
         <div className="flex flex-row w-full   border border-b-2 border-emerald-500 overflow-hidden shadow-lg bg-white shadow-black/3 rounded-3xl">
@@ -27,6 +31,7 @@ export function CardHubungiDesktop({
                     alt={bgImageAlt}
                     width={500}
                     height={500}
+                    priority={priority}
                     className="w-72 h-full object-cover"
                 />
             </div>
@@ -41,15 +46,19 @@ export function CardHubungiDesktop({
                 </div>
 
                 <div id="bottom" className="w-full">
-                    <button className="  bg-green-500 p-2 cursor-pointer justify-center items-center flex flex-row rounded-full w-[95%] ">
-                        <div className="flex flex-row items-center justify-center gap-6 w-full ">
+                    <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-green-500 hover:bg-green-600 transition-colors p-2 cursor-pointer justify-center items-center flex flex-row rounded-full w-[95%] text-white font-medium"
+                    >
+                        <div className="flex flex-row items-center justify-center gap-6 w-full">
                             <div className="flex items-center">
                                 <Image
                                     src={buttonIconSrc}
                                     alt={buttonIconAlt}
                                     width={30}
                                     height={30}
-                                    className=""
                                 />
                             </div>
 
@@ -57,7 +66,7 @@ export function CardHubungiDesktop({
                                 <p>{buttonText}</p>
                             </div>
                         </div>
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>

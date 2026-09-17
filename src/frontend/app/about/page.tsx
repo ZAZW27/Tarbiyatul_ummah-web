@@ -27,7 +27,7 @@ export default function AboutPage() {
                     <p className="mt-4 md:text-xl text-lg">
                         LKSA Tarbiyatul Ummah Balikpapan adalah lembaga sosial yang berperan penting
                         dalam merawat dan mendidik anak-anak yatim piatu dengan program pendidikan
-                        dan keagamaan. LKSA ini berdiri pada tanggal 01 juni 2026 di Balikpapan.{' '}
+                        dan keagamaan. LKSA ini berdiri pada tanggal 01 juni 2002 di Balikpapan.{' '}
                         <br /> <br />
                         LKSA Tarbiyatul Ummah menyediakan berbagai fasilitas dan program pembinaan
                         yang bertujuan untuk mendukung perkembangan anak secara moral, spiritual,
@@ -42,8 +42,9 @@ export default function AboutPage() {
                         alt="Your Company"
                         src="/images/image_about_lksa.png"
                         className=" md:rounded-2xl object-cover w-full h-auto shadow-md"
-                        width={500}
-                        height={500}
+                        width={250}
+                        height={250}
+                        priority
                     />
                 </div>
             </section>
@@ -76,45 +77,45 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            <section id="program" className="flex flex-col gap-6 w-full ">
+            <section id="program" className="flex flex-col gap-6 w-full scroll-mt-98 ">
                 <div className="text-emerald-500 text-xl font-semibold border-l-4 border-emerald-500 mx-4 lg:mx-12 mt-12 lg:text-3xl">
                     <p className="pl-2">Program LKSA Tarbiyatul Ummah</p>
                 </div>
 
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 px-4 lg:px-12">
-                    <div className="flex h-full border-2 border-dashed border-gray-400">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 px-4 lg:px-12" id="program">
+                    <div className="flex h-full ">
                         <CardProgramPendidikan />
                     </div>
 
-                    <div className="flex  h-full border-2 border-dashed border-gray-400">
+                    <div className="flex  h-full ">
                         <CardProgramKeagamaan />
                     </div>
                 </div>
             </section>
 
-            <section id="sasaran_layanan" className=" gap-4   mx-4 lg:mx-8 ">
+            <section id="sasaran_layanan" className=" gap-4 scroll-mt-98  mx-4 lg:mx-8 ">
                 <div className="text-emerald-500 text-xl font-semibold border-l-4 border-emerald-500 lg:mx-4 mt-12 lg:text-3xl mb-6">
                     <p className="pl-2">Sasaran Pelayanan</p>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
-                    <div className=" flex  h-full w-full border-2 border-dashed border-gray-400">
+                    <div className=" flex  h-full w-full ">
                         <CardSasaranLayananAbout title="Anak-anak tidak mampu " />
                     </div>
 
-                    <div className="flex  h-full border-2 border-dashed border-gray-400">
+                    <div className="flex  h-full ">
                         <CardSasaranLayananAbout title="Fakir Miskin" />
                     </div>
 
-                    <div className="flex  h-full border-2 border-dashed border-gray-400">
+                    <div className="flex  h-full ">
                         <CardSasaranLayananAbout title="Yatim Piatu" />
                     </div>
 
-                    <div className=" flex  h-full border-2 border-dashed border-gray-400">
+                    <div className=" flex  h-full ">
                         <CardSasaranLayananAbout title="Drop Out" />
                     </div>
 
-                    <div className=" flex h-full border-2 border-dashed border-gray-400">
+                    <div className=" flex h-full ">
                         <CardSasaranLayananAbout title="Anak-Anak Terlantar" />
                     </div>
                 </div>
@@ -122,12 +123,12 @@ export default function AboutPage() {
 
             <section
                 id="fasilitas_pelayanan"
-                className="grid grid-cols-1 gap-4 md:grid-cols-2 mx-4 lg:mx-10 lg:pl-2 "
+                className="grid grid-cols-1 gap-4 md:grid-cols-2 scroll-mt-10  mx-4 lg:mx-10 lg:pl-2 "
             >
                 <div className="text-emerald-500 text-xl font-semibold border-l-4 border-emerald-500  mt-12 lg:text-3xl">
                     <p className="pl-2">Fasilitas Pelayanan</p>
                 </div>
-                <div className="col-span-1 flex md:col-span-2 h-auto border-2 border-dashed border-gray-400">
+                <div className="col-span-1 flex md:col-span-2 h-auto ">
                     <p className="text-justify text-lg md:text-xl ">
                         LKSA Tarbiyatul Ummah memiliki dua fasilitas pelayanan yang bertujuan untuk
                         memastikan kelancaran kegiatan operasional LKSA. Fasilitas-fasilitas
@@ -139,7 +140,7 @@ export default function AboutPage() {
                     </p>
                 </div>
 
-                <div className="flex h-full border-2 border-dashed border-gray-400">
+                <div className="flex h-full ">
                     <CardFasilitasMasjid />
                 </div>
 
@@ -150,7 +151,7 @@ export default function AboutPage() {
                     </p>
                 </div>
 
-                <div className=" flex  h-full border-2 border-dashed border-gray-400 ">
+                <div className=" flex  h-full  ">
                     <CardFasilitasMotor />
                 </div>
 
@@ -171,7 +172,7 @@ export default function AboutPage() {
                 </div>
                 <div></div>
 
-                <div className="flex  h-auto  items-center justify-center border-2 border-dashed border-gray-400 flex-col mx-4">
+                <div className="flex  h-auto  items-center justify-center  flex-col mx-4">
                     <div className=" lg:hidden font-bold text-[#029141]  tracking-wider border-x-4 w-full text-center border-emerald-500 mx-4">
                         STRUKTUR LKSA
                     </div>
@@ -191,7 +192,7 @@ export default function AboutPage() {
                     </p>
                 </div>
 
-                <div className="flex  h-auto  mx-4 items-center justify-center border-2 border-dashed border-gray-400">
+                <div className="flex  h-auto  mx-4 items-center justify-center ">
                     <Image
                         alt="Your Company"
                         src="/images/struktur_lksa.png"

@@ -24,8 +24,9 @@ export default function AboutPageHero() {
                         alt="Your Company"
                         src="/images/about_hero.png"
                         className="h-32 w-full"
-                        width={1000}
-                        height={700}
+                        width={250}
+                        height={259}
+                        priority
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
                 </div>

@@ -1,5 +1,5 @@
 'use client';
-// import Link from 'next/link';
+import Link from 'next/link';
 import Image from 'next/image';
 // fw
 
@@ -39,21 +39,10 @@ export default function footer() {
                         <ul className="text-body font-medium">
                             <li className="mb-4">
                                 <span className="text-white text-sm font-light">
-                                    Anda dapat melakukan donasi melalui nomor rekening atau kode
-                                    QRIS dibawah ini. <br /> nomor rekening : 000000000000000000
-                                    <br /> Kode QRIS :
+                                    Anda dapat melakukan donasi melalui nomor rekening. <br /> nomor
+                                    rekening : 0630-01-001560-53-5 - BRI <br /> Nama : NAMA: PANTI
+                                    ASUHAN TARBIYATUL UMMAH
                                 </span>
-                            </li>
-                            <li>
-                                <a href="#" className="hover:underline">
-                                    <Image
-                                        src="/images/qris_dummy.png"
-                                        alt=""
-                                        className=""
-                                        width={180}
-                                        height={180}
-                                    />
-                                </a>
                             </li>
                         </ul>
                     </div>
@@ -61,11 +50,12 @@ export default function footer() {
 
                 <div className="flex flex-col text-white">
                     <h2 className="mb-6 text-sm font-semibold   text-white">Hubungi Kami</h2>
-                    <ul className="space-y-6 text-sm text-white">
+                    <ol className="space-y-6 text-sm text-white">
                         <li className="flex items-center space-x-3">
                             <a
                                 href="
                             https://www.instagram.com/tarbiyatul.ummah.bpn/"
+                                aria-label="Follow us on instagram"
                             >
                                 <Image
                                     src="/icons/instagram_white.png"
@@ -78,6 +68,7 @@ export default function footer() {
                             <a
                                 href="https://www.instagram.com/tarbiyatul.ummah.bpn/"
                                 className="hover:underline"
+                                aria-label="Follow us on instagram"
                             >
                                 tarbiyatul.ummah.bpn
                             </a>
@@ -91,8 +82,12 @@ export default function footer() {
                                 width={30}
                                 height={30}
                             />
-                            <a href="https://flowbite.com/" className="hover:underline">
-                                08214161683655 (Ketua LKSA)
+                            <a
+                                href="https://wa.me/6282141683655?text=Halo%20saya%20ingin%20bertanya"
+                                className="hover:underline"
+                                aria-label="Contact us on whatsapp"
+                            >
+                                082141683655 (Ketua LKSA)
                             </a>
                         </li>
 
@@ -104,51 +99,61 @@ export default function footer() {
                                 width={30}
                                 height={30}
                             />
-                            <a href="https://flowbite.com/" className="hover:underline">
-                                lksatarbiyatulummahbpn@gmail.com
+                            <a
+                                href="mailto:Tarbiyatulummah888@gmail.com?subject=Pertanyaan%20Seputar%20Yayasan"
+                                className="hover:underline"
+                                aria-label="Contact us on Email"
+                            >
+                                Tarbiyatulummah888@gmail.com
                             </a>
                         </li>
+                    </ol>
 
-                        <div className="text-white hidden md:block">
-                            <li className="mb-4 font-semibold">
-                                <a href="#" className="hover:underline">
-                                    Program Kami
-                                </a>
+                    <div className="text-white hidden md:block">
+                        <ol>
+                            <li className="mt-4 font-semibold">
+                                <Link href="/about#program">Program Kami</Link>
                             </li>
                             <li className="mb-1">
-                                <a href="#" className="hover:underline">
-                                    Pendidikan
-                                </a>
+                                <Link href="/about#program">Pendidikan</Link>
                             </li>
 
                             <li className="pb-12">
-                                <a href="#" className="hover:underline">
-                                    Keagamaan
-                                </a>
+                                <Link href="/about#program">Keagamaan</Link>
                             </li>
 
                             <li>
-                                <a className="text-xs" href="http://www.freepik.com">
+                                <a
+                                    className="text-xs"
+                                    href="http://www.freepik.com"
+                                    aria-label="batik credits"
+                                >
                                     the batik are Designed by GarryKillian / Freepik
                                 </a>
                             </li>
-                        </div>
-                    </ul>
+                        </ol>
+                    </div>
                 </div>
 
                 <div className="flex flex-col gap-8 text-white">
                     <div>
                         <h2 className="mb-6 text-sm font-semibold text-heading ">Lokasi</h2>
                         <div className="flex flex-row items-start justify-between gap-4">
-                            <a href="https://maps.app.goo.gl/GoU95qQ2JHdGywiK6">
+                            <a
+                                href="https://maps.app.goo.gl/GoU95qQ2JHdGywiK6"
+                                aria-label="Our Locations"
+                            >
                                 <p className="text-white text-sm font-light">
                                     Kalimantan Timur, Balikpapan Jl. Soekarno Hatta KM 8 RT 68,
-                                    Kelurahan Batu Ampar Balikpapan Utara
+                                    Kelurahan Graha Indah Balikpapan Utara
                                 </p>
                             </a>
 
                             <div className=" h-40 w-40 shrink-0 overflow-hidden rounded ">
-                                <a href="https://maps.app.goo.gl/GoU95qQ2JHdGywiK6">
+                                <a
+                                    href="https://maps.app.goo.gl/GoU95qQ2JHdGywiK6"
+                                    aria-label="Our Locations"
+                                >
                                     <Image
                                         src="/images/lksa_map.png"
                                         alt=""
@@ -164,19 +169,41 @@ export default function footer() {
 
                 <div className="flex flex-col gap-8 text-white md:hidden">
                     <div>
-                        <h2 className="mb-2 text-sm font-semibold text-heading ">Tentang Kami</h2>
-                        <h2 className="mb-2 text-sm font-semibold text-heading ">Galeri LKSA</h2>
-                        <h2 className="mb-6 text-sm font-semibold text-heading ">
-                            Kerajinan Tangan
-                        </h2>
+                        <Link href="/about">
+                            {' '}
+                            <h2 className="mb-2 text-sm font-semibold text-heading ">
+                                Tentang Kami
+                            </h2>
+                        </Link>
+                        <Link href="/galeri">
+                            {' '}
+                            <h2 className="mb-2 text-sm font-semibold text-heading ">
+                                Galeri LKSA
+                            </h2>
+                        </Link>
+                        <Link href="/produk">
+                            {' '}
+                            <h2 className="mb-2 text-sm font-semibold text-heading ">
+                                Kerajinan Tangan
+                            </h2>
+                        </Link>
                     </div>
                 </div>
 
                 <div className="flex flex-col gap-8 text-white md:hidden">
                     <div>
-                        <h2 className="mb-2 text-sm font-semibold text-heading ">Program</h2>
-                        <p className="mb-2 text-xs  text-heading ">Pendidikan</p>
-                        <p className="mb-2 text-xs  text-heading">Keagamaan</p>
+                        <Link href="/about#program">
+                            {' '}
+                            <h2 className="mb-2 text-sm font-semibold text-heading ">Program</h2>
+                        </Link>
+                        <Link href="/about#program">
+                            {' '}
+                            <p className="mb-2 text-sm font-semibold text-heading ">Pendidikan</p>
+                        </Link>
+                        <Link href="/about#program">
+                            {' '}
+                            <p className="mb-2 text-sm font-semibold text-heading ">Keagamaan</p>
+                        </Link>
                     </div>
                 </div>
             </div>

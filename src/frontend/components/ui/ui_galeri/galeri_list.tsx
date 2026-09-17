@@ -1,6 +1,4 @@
 'use client';
-import { useState, useEffect } from 'react'; // Failed linting, but keep it here for now
-import { useRouter } from 'next/navigation';
 import CardGaleri from './card_galeri';
 import { Gallery } from '@/types/gallery';
 
@@ -23,7 +21,7 @@ export default function GalleryList({ GaleriIn, isAdmin }: GalleryListProps) {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 items-start">
             {GaleriIn.map((gallery) => (
-                <CardGaleri key={gallery.id} {...gallery} isAdmin={isAdmin} />
+                <CardGaleri key={gallery.id} {...gallery} priority={true} isAdmin={isAdmin} />
             ))}
         </div>
     );

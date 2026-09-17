@@ -1,6 +1,5 @@
 'use client';
 import { Gallery } from '@/types/gallery';
-import { getMediaCatalog } from '@/service/media.service';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRef } from 'react';
@@ -110,7 +109,7 @@ export default function MediaCarausel({ mediaList }: MediaCarouselHomeProps) {
                                     <h3 className="truncate text-base font-semibold text-neutral-800">
                                         {item.title}
                                     </h3>
-                                    <p className="mt-1 line-clamp-2 text-xs text-neutral-500">
+                                    <p className="mt-1 line-clamp-2 text-xs text-black">
                                         {item.description}
                                     </p>
                                 </div>

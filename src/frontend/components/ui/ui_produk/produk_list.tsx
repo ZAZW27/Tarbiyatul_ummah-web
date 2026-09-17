@@ -1,6 +1,4 @@
 'use client';
-import { useState, useEffect } from 'react'; // Failed linting, but keep it here for now
-import { useRouter } from 'next/navigation';
 import CardProduk from './card_produk';
 import { Produk } from '@/types/produk';
 
@@ -23,7 +21,7 @@ export default function ProdukList({ produkIn, isAdmin }: ProdukListProps) {
     return (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 items-start">
             {produkIn.map((produk) => (
-                <CardProduk key={produk.id} {...produk} isAdmin={isAdmin} />
+                <CardProduk key={produk.id} {...produk} priority={true} isAdmin={isAdmin} />
             ))}
         </div>
     );
