@@ -121,9 +121,15 @@ export default function footer() {
                                 </a>
                             </li>
 
-                            <li>
+                            <li className="pb-12">
                                 <a href="#" className="hover:underline">
                                     Keagamaan
+                                </a>
+                            </li>
+
+                            <li>
+                                <a className="text-xs" href="http://www.freepik.com">
+                                    the batik are Designed by GarryKillian / Freepik
                                 </a>
                             </li>
                         </div>
@@ -140,6 +146,7 @@ export default function footer() {
                                     Kelurahan Batu Ampar Balikpapan Utara
                                 </p>
                             </a>
+
                             <div className=" h-40 w-40 shrink-0 overflow-hidden rounded ">
                                 <a href="https://maps.app.goo.gl/GoU95qQ2JHdGywiK6">
                                     <Image

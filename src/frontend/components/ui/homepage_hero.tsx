@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { TombolHijau } from '@/components/ui/buttons';
 import { Poppins } from 'next/font/google';
+import Link from 'next/link';
 
 const poppinsTitle = Poppins({
     weight: ['700'],
@@ -107,10 +108,11 @@ export default function HomePageHero() {
                                 dan juga sosial agar menjadi pribadi yang baik dan peduli terhadap
                                 sesama.
                             </p>
-
-                            <TombolHijau>
-                                <span>Tentang Kami</span>
-                            </TombolHijau>
+                            <Link href="/about">
+                                <TombolHijau>
+                                    <span>Tentang Kami</span>
+                                </TombolHijau>
+                            </Link>
                         </div>
                     </div>
                 </div>

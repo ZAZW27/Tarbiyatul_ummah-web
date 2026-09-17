@@ -2,6 +2,7 @@ import './globals.css';
 import Header from '../components/layout/header';
 import Footer from '../components/layout/footer';
 import { cookies } from 'next/headers';
+import { Toaster } from 'sonner';
 // import type { Metadata } from 'next';
 // Impor font dari modul Google Fonts bawaan Next.js
 import { Inclusive_Sans } from 'next/font/google';
@@ -25,6 +26,8 @@ export const metadata = {
     description: 'Deskripsi website Anda',
 };
 
+// wmefo
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
     const cookieStore = cookies();
     const isAdmin = (await cookieStore).has('admin_session');
@@ -36,6 +39,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 <Header isAdmin={isAdmin} />
 
                 <main>{children}</main>
+                <Toaster position="top-center" richColors />
 
                 <Footer />
             </body>

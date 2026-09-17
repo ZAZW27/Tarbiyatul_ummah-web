@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { loginAdmin } from '@/service/auth.service';
 import Image from 'next/image';
+import { toast } from 'sonner';
 
 export default function Login() {
     const router = useRouter();
@@ -20,6 +21,7 @@ export default function Login() {
 
         try {
             const data = await loginAdmin(username, password); // failed linting (data is declatred but never used) - sengaja
+            toast.success('Login berhasil! Selamat datang.');
             router.push('/produk');
             router.refresh();
         } catch (err) {

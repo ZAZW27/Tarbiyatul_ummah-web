@@ -1,10 +1,10 @@
-export interface Produk {
+export interface Gallery {
     id: number;
     title: string;
     description: string;
     image_url: string;
-    file_id: string;
-    price: number;
+    file_id: null;
+    price: null;
     stock: number;
     status: 'active';
     category: string;
