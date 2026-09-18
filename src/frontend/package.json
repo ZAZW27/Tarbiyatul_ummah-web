@@ -19,7 +19,8 @@
         "prettier": "^3.9.6",
         "react": "19.2.4",
         "react-dom": "19.2.4",
-        "sonner": "^2.0.8"
+        "sonner": "^2.0.8", 
+        "sharp": "^0.34.5"
     },
     "devDependencies": {
         "@tailwindcss/postcss": "^4.3.3",
