@@ -31,7 +31,7 @@ export default function CardProduk({
     status,
     isAdmin,
     category,
-    priority = false,
+    priority = true,
 }: CardProdukProps) {
     // const isImageValid = .image_url && (produk.image_url.startsWith('http') || produk.image_url.startsWith('/'));
     const kontakWhatsapp = 6282141683655; // pak abdi ahadi

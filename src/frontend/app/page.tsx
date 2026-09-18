@@ -1,18 +1,28 @@
 // import Image from 'next/image';
 // import Link from 'next/link';
 import HomePageHero from '@/components/ui/homepage_hero';
-import ProdukSectionServer from '@/components/ui/ui_home/produk_section_server';
-import MediaSectionServer from '@/components/ui/ui_home/media_section_server';
+// import ProdukSectionServer from '@/components/ui/ui_home/produk_section_server';
+// import MediaSectionServer from '@/components/ui/ui_home/media_section_server';
 
+import { getMediaCatalog } from '@/service/media.service';
+import { getMarketCatalog } from '@/service/market.service';
 //
 import ProgramKamiSection from '@/components/ui/ui_home/programkami_section';
 import VisiMisiCard from '@/components/ui/ui_home/card_visi_misi';
 import { CardSasaranPelayanan } from '@/components/ui/ui_home/card_sasaran_pelayanan';
 import { CardFasilitasMasjid, CardFasilitasMotor } from '@/components/ui/ui_home/card_fasilitas';
 import ProdukCarausel from '@/components/ui/ui_home/caraousel_produk';
+import MediaCarausel from '@/components/ui/ui_home/carausel_galeri';
 import Link from 'next/link';
 
-export default function Homepage() {
+export const dynamic = 'force-dynamic';
+
+export default async function Homepage() {
+    // Eksekusi kedua request secara paralel
+    const [resMedia, resProduk] = await Promise.all([
+        getMediaCatalog().catch(() => ({ data: [] })),
+        getMarketCatalog().catch(() => ({ data: [] })),
+    ]);
     return (
         <main className=" flex flex-col w-full  gap-16  bg-gray-100">
             {/* anak-anak adalah...sampai dengan tentang kami  */}
@@ -93,7 +103,7 @@ export default function Homepage() {
                 id="produk_section"
                 className="w-full max-w-full overflow-hidden px-4 sm:px-6 "
             >
-                <MediaSectionServer />
+                <MediaCarausel mediaList={resMedia.data} />
             </section>
 
             {/* untuk section sasaran pelayanan */}
@@ -101,7 +111,7 @@ export default function Homepage() {
                 id="produk_section"
                 className="w-full max-w-full overflow-hidden px-4 sm:px-6 mb-20"
             >
-                <ProdukSectionServer />
+                <ProdukCarausel produkList={resProduk.data} />
             </section>
         </main>
     );

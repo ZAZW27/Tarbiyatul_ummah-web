@@ -34,6 +34,8 @@ const formKosong = {
     harga: '',
     stock: '',
 };
+const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB (satuan bytes)
+const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 
 export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps) {
     const router = useRouter(); // Inisialisasi router
@@ -64,6 +66,27 @@ export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps)
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
+
+        // 1. Validasi format berkas
+        if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+            setErrorMsg('Format gambar tidak didukung. Gunakan file JPG, PNG, atau WebP.');
+            e.target.value = ''; // Reset input file
+            setImageFile(null);
+            setPreviewUrl(null);
+            return;
+        }
+
+        // 2. Validasi ukuran berkas (maksimal 2 MB)
+        if (file.size > MAX_FILE_SIZE) {
+            setErrorMsg('Ukuran gambar terlalu besar. Maksimal ukuran adalah 2 MB.');
+            e.target.value = ''; // Reset input file
+            setImageFile(null);
+            setPreviewUrl(null);
+            return;
+        }
+
+        // Jika valid, hapus pesan error dan tampilkan preview
+        setErrorMsg(null);
         setImageFile(file);
         setPreviewUrl(URL.createObjectURL(file));
     };
@@ -166,6 +189,12 @@ export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps)
                                     </div>
                                 )}
 
+                                {errorMsg && (
+                                    <p className="text-center text-xs text-red-500 font-medium">
+                                        {errorMsg}
+                                    </p>
+                                )}
+
                                 <form onSubmit={handleSubmit} className="space-y-4">
                                     {/* Foto produk */}
                                     <div className="flex flex-col items-center justify-center gap-3 mb-10">
@@ -188,7 +217,7 @@ export default function ModalTambahProduk({ onSuccess }: ModalTambahProdukProps)
                                         <input
                                             id="foto-produk"
                                             type="file"
-                                            accept="image/*"
+                                            accept="image/jpeg,image/png,image/webp"
                                             onChange={handleFileChange}
                                             className="hidden"
                                         />

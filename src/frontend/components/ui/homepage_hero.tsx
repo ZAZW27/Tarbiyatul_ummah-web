@@ -81,7 +81,9 @@ export default function HomePageHero() {
                     alt="LKSA Tarbiyatul Ummah"
                     src="/images/hero_image_LKSA.webp"
                     fill
+                    quality={10}
                     priority
+                    sizes="(max-width: 768px) 100vw, 1200px"
                     className="object-cover"
                 />
                 {/* right to left gradient */}

@@ -36,7 +36,7 @@ export function CardProgramKeagamaan() {
         <section className="relative flex flex-col rounded-xl overflow-hidden shadow-black/60 shadow-md w-full min-h-[200px]  md:text-lg lg:text-xl  px-4 py-4 isolate z-0 ">
             <Image
                 alt="Your Company"
-                src="/images/gambar_orang_nulis.jpg"
+                src="/images/ngaji.webp"
                 className="object-cover"
 
                 priority

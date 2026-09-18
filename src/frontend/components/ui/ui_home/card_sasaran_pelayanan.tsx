@@ -13,7 +13,7 @@ export function CardSasaranPelayanan({ title }: CardSasaranProps) {
                 {/* ORNAMENT AREA */}
 
                 <Image
-                    src="/images/ornamen_batik_bawah.png"
+                    src="/images/new_ornamen_batik_bawah.webp"
                     alt="Ornamen batik bawah"
                     width={120}
                     height={120}
@@ -21,7 +21,7 @@ export function CardSasaranPelayanan({ title }: CardSasaranProps) {
                 />
 
                 <Image
-                    src="/images/ornamen_batik_atas.png"
+                    src="/images/new_ornamen_batik_atas.webp"
                     alt="Ornamen batik bawah"
                     width={160}
                     height={160}
