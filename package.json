@@ -10,8 +10,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "format": "prettier . --write",
         "format:check": "prettier . --check",
-        "lint": "eslint .",
-        "vercel-build": "prisma generate --schema=./src/backend/api/prisma/schema.prisma && prisma migrate deploy --schema=./src/backend/api/prisma/schema.prisma"
+        "lint": "eslint ."
     },
     "author": "Zharif Aziz Zulkarnain Widodo",
     "license": "ISC",
