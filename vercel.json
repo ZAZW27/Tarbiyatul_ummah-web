@@ -6,7 +6,7 @@
     },
     "backend": {
       "root": "src/backend/api",
-      "entrypoint": "src/server.js",
+      "entrypoint": "src/server.ts",
       "framework": "express",
       "buildCommand": "npm run build"
     }
