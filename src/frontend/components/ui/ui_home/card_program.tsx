@@ -39,7 +39,7 @@ export function ProgramCardKeagamaan() {
         <section className="cursor-pointer relative flex flex-col rounded-xl overflow-hidden w-full min-h-50 md:text-lg px-4 py-4 md:px-12 transition-all duration-300 ease-out shadow-md hover:-translate-y-1.5 hover:shadow-slate-700/30 hover:shadow-[0_10px_10px_0px_rgba(0,0,0,0.5),0_0_25px_var(--tw-shadow-color)]">
             <Image
                 alt="Your Company"
-                src="/images/gambar_orang_nulis.jpg"
+                src="/images/ngaji.webp"
                 className="object-cover"
 
                 priority

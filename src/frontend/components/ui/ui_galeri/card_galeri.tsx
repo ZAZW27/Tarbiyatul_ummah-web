@@ -23,7 +23,7 @@ export default function CardGallery({
     file_id,
     status,
     isAdmin,
-    priority = false,
+    priority = true,
 }: CardGalleryProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [expandedDesc, setExpanedDesc] = useState(false);
