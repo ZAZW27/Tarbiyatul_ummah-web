@@ -15,9 +15,16 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
+
+const allowedOrigins = [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    process.env.FRONTEND_URL,
+].filter(Boolean) as string[];
+
 app.use(
     cors({
-        origin: 'http://localhost:5173',
+        origin: allowedOrigins,
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
         credentials: true,
     }),
@@ -26,6 +33,7 @@ app.use(
 // Auth routes
 app.post('/api/auth/login', login);
 app.post('/api/auth/logout', logout);
+
 // Mount Routes
 app.use('/api/market', marketRoutes);
 app.use('/api/media', mediaRoutes);
