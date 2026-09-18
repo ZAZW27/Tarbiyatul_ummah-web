@@ -11,6 +11,7 @@ import categoryRoutes from './routes/categories.routes.js';
 import { login, logout } from './controllers/auth.controller.js';
 
 const app = express();
+app.set('trust proxy', 1);
 
 // Middleware
 app.use(express.json());
@@ -18,7 +19,9 @@ app.use(cookieParser());
 
 const allowedOrigins = [
     'http://localhost:5173',
+    'http://localhost:5000',
     'http://localhost:3000',
+    'https://tarbiyatul-ummahbpp.vercel.app',
     process.env.FRONTEND_URL,
 ].filter(Boolean) as string[];
 
