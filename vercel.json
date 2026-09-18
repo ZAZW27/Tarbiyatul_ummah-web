@@ -6,8 +6,9 @@
     },
     "backend": {
       "root": "src/backend/api",
-      "entrypoint": "src/server.ts",
-      "framework": "express"
+      "entrypoint": "dist/server.js",
+      "framework": "express",
+      "buildCommand": "npm run build"
     }
   },
   "rewrites": [
