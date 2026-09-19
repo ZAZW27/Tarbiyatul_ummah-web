@@ -10,6 +10,5 @@ export const buildQueryParams = (page: number, limit: number, categories?: strin
     if (categories && categories.length > 0) {
         categories.forEach((cat) => params.append('category', cat));
     }
-
     return params.toString();
 };

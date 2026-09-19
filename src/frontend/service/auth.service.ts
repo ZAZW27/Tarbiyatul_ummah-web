@@ -1,5 +1,6 @@
 import { API_BASE_URL } from './config';
 
+
 export const loginAdmin = async (username: string, password: string) => {
     const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',

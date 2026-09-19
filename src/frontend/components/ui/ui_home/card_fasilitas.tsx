@@ -34,7 +34,7 @@ export function CardFasilitasMotor() {
     return (
         <div className="relative flex flex-col lg:60 w-full items-center justify-center overflow-hidden rounded-2xl">
             <div className=" font-bold flex flex-col items-center opacity-80  z-10 w-40 absolute rounded-b-xl top-0 py-1 bg-green-700 text-white  ">
-                Masjid
+               Motor
             </div>
 
             <div className="absolute left-4 top-1/2 z-10 -translate-y-1/2 ">

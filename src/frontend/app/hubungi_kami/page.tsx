@@ -85,7 +85,7 @@ export default function HubungiKami() {
                             buttonIconSrc="/icons/email_vector.png"
                             buttonIconAlt="icon email"
                             buttonText="Hubungi Kami Melalui Gmail"
-                            href="mailto:Tarbiyatulummah888@gmail.com?subject=Pertanyaan%20Seputar%20Yayasan"
+                            href="https://mail.google.com/mail/?view=cm&fs=1&to=Tarbiyatulummah888@gmail.com&su=Pertanyaan%20Seputar%20Yayasan"
                         />
                     </div>
                 </div>
