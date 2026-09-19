@@ -56,6 +56,8 @@ export default function footer() {
                                 href="
                             https://www.instagram.com/tarbiyatul.ummah.bpn/"
                                 aria-label="Follow us on instagram"
+                                    target="_blank"
+                                     rel="noopener noreferrer"
                             >
                                 <Image
                                     src="/icons/instagram_white.png"
@@ -66,6 +68,8 @@ export default function footer() {
                                 />
                             </a>
                             <a
+                                target="_blank"
+                    rel="noopener noreferrer"
                                 href="https://www.instagram.com/tarbiyatul.ummah.bpn/"
                                 className="hover:underline"
                                 aria-label="Follow us on instagram"
@@ -83,6 +87,8 @@ export default function footer() {
                                 height={30}
                             />
                             <a
+                                target="_blank"
+                                 rel="noopener noreferrer"
                                 href="https://wa.me/6282141683655?text=Halo%20saya%20ingin%20bertanya"
                                 className="hover:underline"
                                 aria-label="Contact us on whatsapp"
@@ -100,6 +106,8 @@ export default function footer() {
                                 height={30}
                             />
                             <a
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 href="mailto:Tarbiyatulummah888@gmail.com?subject=Pertanyaan%20Seputar%20Yayasan"
                                 className="hover:underline"
                                 aria-label="Contact us on Email"
