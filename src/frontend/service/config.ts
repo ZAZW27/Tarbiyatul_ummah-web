@@ -1,4 +1,4 @@
-export const API_BASE_URL = '/api';
+export const API_BASE_URL = process.env.BACKEND_URL;
 
 export const buildQueryParams = (page: number, limit: number, categories?: string[]) => {
     const params = new URLSearchParams({
