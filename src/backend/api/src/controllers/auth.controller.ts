@@ -33,7 +33,7 @@ export const login = async (req: Request, res: Response) => {
         res.cookie('admin_session', token, {
             httpOnly: true,
             secure: true,
-            sameSite: 'none',
+            sameSite: 'lax',
             path: '/',
             maxAge: 3 * 24 * 60 * 60 * 1000,
         });
@@ -48,7 +48,7 @@ export const logout = (req: Request, res: Response) => {
     res.clearCookie('admin_session', {
         httpOnly: true,
         secure: true,
-        sameSite: 'none',
+        sameSite: 'lax',
         path: '/',
     });
 
