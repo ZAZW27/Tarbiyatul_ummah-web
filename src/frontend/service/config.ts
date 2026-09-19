@@ -1,5 +1,4 @@
-
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+export const API_BASE_URL = process.env.BACKEND_URL + '/api';
 
 export const buildQueryParams = (page: number, limit: number, categories?: string[]) => {
     const params = new URLSearchParams({
