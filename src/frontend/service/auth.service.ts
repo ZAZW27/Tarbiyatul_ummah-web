@@ -9,6 +9,11 @@ export const loginAdmin = async (username: string, password: string) => {
         credentials: 'include',
     });
 
+    if (!response.ok) {
+        // throwing more friendly error message if the json parse is failed
+    throw new Error('Server sedang mengalami kendala. Silakan coba beberapa saat lagi.');
+  }
+
     const data = await response.json();
 
     if (!response.ok) {
